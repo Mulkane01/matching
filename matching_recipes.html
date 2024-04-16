@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Matcher</title>
+	<link rel="stylesheet" href="edit_recipes.css">
+</head>
+<body>
+    <h1>What's For Dinner?</h1>
+	
+	<img id="pantry" src="pantry.png" alt="">
+      
+<label id="matchResult"></label>
+    <label id = "entering" for="ingredientInput">Enter ingredients:</label>
+	
+	  <input type="text" id="ingredientInput" class="dropdown-input" placeholder="Type to filter...">
+    
+	
+    <div class="dropdown">
+        <div class="dropdown-menu" id="ingredientDropdown"></div>
+    </div>
+	
+   <div id="ingredientList"></div>
+    
+	<!--<script src="recipe_function.js"></script>-->
+
+
+    <script>
+	
+	
+        // Define ingredients
+             // Define ingredients
+        const ingredients = [
+		'onions',
+		'cream-cheese',
+            'beans',
+    'butter',
+    'red-onion',
+	'baked-pie-shell',
+	'pie-shell',
+	'accent',
+	'accent-seasoning-mix',
+	'alfalfa-sprouts',
+	'flour',
+	'allspice',
+	'almond-extract',
+	'almond-flavoring',
+	'almonds',
+	'angel-cake-mix',
+	'anise',
+	'mixed-veggies',
+	'apples',
+	'artichoke-hearts',
+	'artichokes',
+	'asparagus',
+	'avocado',
+	'chicken',
+	'bacon',
+	'baked-pastry-shell',
+	'baking-powder',
+	'baking-soda',
+	'bamboo-shoots',
+	'banana',
+	'BBQ-sauce',
+	'basil',
+	'boullion-cube',
+	'bay-leaf',
+	'egg-whites',
+	'eggs',
+	'bean-sprouts',
+	'beef',
+	'beef-bouillon',
+	'beef-round-steak',
+	'beef-stock-base',
+	'berries',
+	'mayo',
+	'bisquick-baking-mix',
+	'blackberries',
+	'blue-cheese',
+	'blueberries',
+	'orange-juice',
+	'water',
+	'boned-chicken-breast',
+	'bourbon',
+	'brandy-flavoring',
+	'bread',
+	'bread-crumbs',
+	'broccoli',
+	'spaghetti',
+	'brown-gravy',
+	'brown-sugar',
+	'buttermilk',
+	'butter-salt',
+	'cabbage',
+	'chicken-broth',
+	'canned -pineapple',
+	'cantaloupe',
+	'caraway-seed',
+	'carrots',
+	'cashew -nuts',
+	'cashews',
+	'catalina-french-dressing',
+	'catsup',
+	'cauliflower',
+	'cayenne-pepper',
+	'celery',
+	'celery-salt',
+	'celery-seed',
+	'cheddar-cheese',
+	'cheese',
+	'cheese-wiz',
+	'chef-boyardee-package-pizza-mix',
+	'cherry-jello',
+	'cherry-tomatoes',
+	'chicken-boullion',
+	'chicken-breast',
+	'chicken-coating-mix',
+	'chicken-liver',
+	'beef-broth',
+	'chicken-ramen',
+	'chicken-thighs',
+	'chicken-wings',
+	'chili-powder',
+	'chinese-noodle-cakes',
+	'chinese-noodles',
+	'chives',
+	'scallions',
+	'chocolate-chips',
+	'clams',
+	'clam -juice',
+	'green-chilies',
+	'green-onions',
+	'milk',
+	'parsley',
+	'peanuts',
+	'spinach',
+	'walnuts',
+	'chow-mein-noodles',
+	'peanut-butter',
+	'cider-vinegar',
+	'cinnamon',
+	'sugar',
+	'clover-garlic',
+	'cloves',
+	'cocoa',
+	'coconut',
+	'rice',
+	'confectioner-sugar',
+	'turkey-breast',
+	'pasta',
+	'pork',
+	'prunes',
+	'ham',
+	'tortillas',
+	'cornflakes',
+	'cornmeal',
+	'cornstarch',
+	'cottage-cheese',
+	'crab',
+	'shrimp',
+	'cracker-crumbs',
+	'cream-corn',
+	'cream-of-chicken-soup',
+	'cream-of-mushroom-soup',
+	'tartar',
+	'crisco',
+	'bacon-bits',
+	
+	'sugar',
+	'stuffong-mix',
+	'vanilla-wafers',
+	'cubed-cheese',
+	'cucumber',
+	'cumin',
+	'cumin-seed',
+	'curry-powder',
+	'curry',
+	'dark-corn-syrup',
+	'oregano',
+	'dijon-mustard',
+	'dill',
+	'whipped-cream',
+	'dried-oregano',
+	'dry-thyme',
+	'dry-bread-crumbs',
+	'dry-mustard',
+	'dry-red-wine',
+	'dry-sherry',
+	'egg-yolk',
+	'hard-boiled-egg',
+	'eggplant',
+	'elbow-macaroni',
+	'elephant',
+	'enchilada-sauce',
+	'evaporated-milk',
+	'feta-cheese',
+	'linguine',
+	'cracker',
+	'fish-fillet',
+	'flake-coconut',
+	'flank-steak',
+	'ginger',
+	'green-beans',
+	'mushrooms',
+	'tomato',
+	'ground-pepper',
+	'hash-brown-potatoes',
+	'whipped-topping',
+	'peas',
+	'fruit-jello',
+	'fruit-juice',
+	'garbanzo-beans',
+	'garlic',
+	'garlic-powder',
+	'gelatin',
+	'ginger-root',
+	'golden-raisins',
+	'gorgonzola-cheese',
+	'graham-cracker',
+	'granulated-sugar',
+	'grated-cheese',
+	'grated-jack-cheese',
+	'grated-lemon-rind',
+	'grated-parmesan-cheese',
+	'grated-romano-cheese',
+	'grated-swiss-cheese',
+	'green-bell-pepper',
+	'green-pepper',
+	'ground-beef',
+	'ground-black-pepper',
+	'ground-chuck',
+	'ground-cumin',
+	'ground-ginger',
+	'ground-red-pepper',
+	'hamburger',
+	'sauteed-wine',
+	'heavy-cream',
+	'honey',
+	'horseradish',
+	'buttered-noodles',
+	'noodles',
+	'hot-pepper-liquid',
+	'hot-water',
+	'ice-water',
+	'instant-vanilla-pudding',
+	'italian-dressing',
+	'italian-seasoning',
+	'mozzarella-cheese',
+	'jack-cheese',
+	'jar-pimentos',
+	'ketchup',
+	'kidney-beans',
+	'knox-gelatin',
+	'knox-unflavored-gelatin',
+	'leaf-oregano',
+	'lemon',
+	'lemon-cake-mix',
+	'lemon-instant-pudding',
+	'lemon-jello',
+	'lemon-juice',
+	'sherry',
+	'white-wine',
+	'lemon-peel',
+	'light-brown-sugar',
+	'light-corn-syrup',
+	'lima-beans',
+	'lime',
+	'lipton-onion-soup-mix',
+	'lite-cream-cheese',
+	'louisiana-style-hot-sauce',
+	'low-fat-milk',
+	'mandarin-oranges',
+	'margarine',
+	'marinara-sauce',
+	'marshmallows',
+	'mashed-potatoes',
+	'milk',
+	'mint-apple-jelly',
+	'miracle-whip',
+	'molasses',
+	'monetary-jack-cheese',
+	'mushroom-soup',
+	'mushroom-stems',
+	'narrow-egg-noodles',
+	'nectarines',
+	'nutmeg',
+	'oatmeal',
+	'oats',
+	'oil',
+	'olive-oil',
+	'onion-powder',
+	'orange-peel',
+	'oranges',
+	'spaghetti-sauce-mix',
+	'paprika',
+	'parmesan-cheese',
+	'pea-pods',
+	'vanilla-ice-cream',
+	'pears',
+	'pecans',
+	'pepper',
+	'pepper-sauce',
+	'phyllo-pastry',
+	'pineapple',
+	'pine-nuts',
+	'pineapple-juice',
+	'pineapple-tidbits',
+	'pitted-dates',
+	'pitted-prunes',
+	'plain-low-fat-yogurt',
+	'poppy-seeds',
+	'potato',
+	'poultry-seasoning',
+	'powdered-sugar',
+	'mustard',
+	'pumpkin',
+	'pumpkin-pie-spice',
+	'rabbit',
+	'radishes',
+	'raisin-liquid',
+	'raisins',
+	'red-food-coloring',
+	'red-kidney-beans',
+	'red-pepper',
+	'red-potatoes',
+	'red-wine',
+	'red-wine-vinaigrette',
+	'low-calorie-mayo',
+	'ribs',
+	'rice-vinegar',
+	'ricotta-cheese',
+	'rolled-oats',
+	'rosemary',
+	'sage',
+	'salad-dressing',
+	'salad-greens',
+	'salad-oil',
+	'salsa',
+	'salt',
+	'salt-and-pepper',
+	'salted-cashew-pieces',
+	'sauerkraut',
+	'sausage',
+	'savory salt',
+	'scallops',
+	'seedless-grapes',
+	'Semi-Sweet-Chocolate-Chips',
+	'shallots',
+	'sherry-cooking-wine',
+	'sifted-flour',
+	'olives',
+	'lettuce',
+	'zucchini',
+	'soda',
+	'soda-water',
+	'sole-fillet',
+	'sour-cream',
+	'sour-milk',
+	'soy-sauce',
+	'spaghetti-sauce',
+	'spanish-seasoning',
+	'special-k-cereal',
+	'spinach-leaves',
+	'orange-marmalade',
+	'steak',
+	'stewed-tomatoes',
+	'strawberries',
+	'summer-squash',
+	'sunflower-seed',
+	'sweet-potatoes',
+	'sweetend-condensed-milk',
+	'swiss-cheese',
+	'taco-seasoning-mix',
+	'tart-apples',
+	'thyme',
+	'toast-slices',
+	'tomato-sauce',
+	'tomato-soup',
+	'tortilla-chips',
+	'unsalted-beef-boullion',
+	'unsalted-peanuts',
+	'unsifted-cake-flour',
+	'vanilla-wafer-crumbs',
+	'veal',
+	'velveeta',
+	'vinegar',
+	'water-chestnut',
+	'watermelon',
+	'wax-beans',
+	'wesson-oil',
+	'wheat-germ',
+	'whipping-cream',
+	'white-bread',
+	'white-corn-syrup',
+	'white-pepper',
+	'white-sauteed-wine',
+	'white-sugar',
+	'white-vinegar',
+	'whole-canned-cherries',
+	'whole-cranberry-sauce',
+	'whole-wheat-flour',
+	'wine-cooler',
+	'worchestshire-sauce',
+	'yellow-cake-mix',
+	'shortening',
+	'vanilla',
+	'vegtable-oil',
+	'all-bran-cereal',
+	'cream-of-tartar',
+	'dream-whip',
+	'tarragon',
+	'tuna',
+	'nuts'
+        ];
+
+        // Define recipes
+        const recipes = [
+{ 
+        name: 'Banana Cake: Preheat the oven to 350°F (175°C). Grease and flour a 9x13 inch pan. In a medium bowl, mix together mashed bananas, shortening, sugar, and eggs. Add salt, sour milk, and soda water. Stir in flour, baking powder, and nuts. Pour batter into prepared pan and bake for 30 to 40 minutes, or until a toothpick inserted into the center of the cake comes out clean.', 
+        ingredients: ['banana', 'shortening', 'sugar', 'eggs', 'salt', 'sour-milk', 'soda-water', 'flour', 'baking-powder', 'nuts'] 
+    },
+    { 
+        name: 'Blueberry Coffee Cake: Preheat oven to 350°F (175°C). Grease and flour a 9x13 inch baking pan. In a large bowl, beat together cream cheese, eggs, sugar, lemon juice, and vanilla until smooth. Blend in butter. Stir in flour and baking powder. Fold in milk and blueberries. Pour batter into prepared pan. Bake for 40 to 45 minutes, or until a toothpick inserted into the center comes out clean.', 
+        ingredients: ['cream-cheese', 'eggs','sugar', 'lemon-juice', 'vanilla', 'butter', 'flour', 'baking-powder', 'milk', 'blueberries'] 
+    },
+    { 
+        name: 'Chocolate Mayonnaise Cake: Preheat oven to 350°F (175°C). Grease and flour two 9-inch round cake pans. In a large bowl, combine flour, sugar, cocoa, baking powder, and baking soda. Stir in mayonnaise and water until well blended. Pour batter into prepared pans. Bake for 30 to 35 minutes, or until a toothpick inserted into the center comes out clean.', 
+        ingredients: ['flour','sugar','cocoa','baking-powder','baking-soda','mayo','water','vanilla'] 
+    },
+    { 
+        name: 'Crazy Cake: Preheat oven to 350°F (175°C). Grease and flour a 9x13 inch baking pan. In a large bowl, combine lemon cake mix, water, lemon jello, vegetable oil, and eggs. Beat until smooth. Pour batter into prepared pan. Bake for 35 to 40 minutes, or until a toothpick inserted into the center comes out clean. Cool completely on wire rack.', 
+        ingredients: ['lemon-cake mix','water','lemon-jello','vegetable-oil','eggs','powdered-sugar','lemon-juice'] 
+    },
+    { 
+        name: 'Fresh Apple Cake: Preheat oven to 350°F (175°C). Grease and flour a 9x13 inch baking pan. In a large bowl, mix together diced apples, sugar, chopped nuts, beaten eggs, vanilla, flour, baking powder, cinnamon, vegetable oil, baking soda, and salt. Pour batter into prepared pan. Bake for 50 to 60 minutes, or until a toothpick inserted into the center comes out clean. Let cool before serving.', 
+        ingredients: ['apples','sugar','nuts','eggs','vanilla','flour','baking-powder','cinnamon','vegetable-oil','baking-soda','salt'] 
+    },
+    { 
+        name: 'Fresh Pear Cake: Preheat oven to 350°F (175°C). Grease and flour a 9x13 inch baking pan. In a large bowl, cream together butter and sugar until light and fluffy. Beat in eggs one at a time. Stir in mashed pears. In a separate bowl, combine flour and baking powder. Gradually add dry ingredients to creamed mixture. Pour batter into prepared pan. Bake for 45 to 50 minutes, or until a toothpick inserted into the center comes out clean. Cool on wire rack before serving.', 
+        ingredients: ['butter','flour','pears','eggs','sugar','milk','salt','powdered-sugar'] 
+    },
+    { 
+        name: 'Graham Cracker Cake: Preheat oven to 350°F (175°C). Grease and flour a 9x13 inch baking pan. In a medium bowl, combine crushed graham crackers, sugar, sour milk, baking soda, and chopped nuts. Pour batter into prepared pan. Bake for 25 to 30 minutes, or until a toothpick inserted into the center comes out clean. Let cool before serving.', 
+        ingredients: ['butter','sugar','sour-milk','graham-cracker','baking-soda','nuts'] 
+    },
+    { 
+        name: 'Hot Water Chocolate Cake: Preheat oven to 350°F (175°C). Grease and flour a 9x13 inch baking pan. In a large bowl, cream together margarine and sugar until light and fluffy. Beat in eggs one at a time. Stir in cocoa, salt, sour milk, and baking soda. Gradually mix in flour until well combined. Pour batter into prepared pan. Bake for 30 to 35 minutes, or until a toothpick inserted into the center comes out clean. Let cool before frosting.', 
+        ingredients: ['margarine','sugar','eggs','cocoa','salt','sour-milk','baking-soda','flour','cloves','vanilla'] 
+    },
+    { 
+        name: 'Hungry Bear Cheese Cake: Preheat oven to 325°F (165°C). Grease and flour a 9 inch springform pan. In a medium bowl, combine wheat germ, graham cracker crumbs, sugar, and cinnamon. Stir in melted butter until mixture resembles coarse crumbs. Press into bottom of prepared pan. In a large bowl, beat together cream cheese, sugar, and vanilla until smooth. Add salt and beat in eggs one at a time. Pour cream cheese mixture over crust. Bake for 40 to 45 minutes, or until center is almost set. Let cool before removing from pan.', 
+        ingredients: ['wheat-germ','graham-cracker','sugar','cinnamon','butter','sour-cream','sugar','vanilla','salt','cream-cheese'] 
+    },
+    { 
+        name: 'Lemon Poppy Cake: Preheat oven to 350°F (175°C). Grease and flour a 9x13 inch baking pan. In a large bowl, combine lemon cake mix, eggs, lemon instant pudding, water, oil, and poppy seeds. Beat until well blended. Pour batter into prepared pan. Bake for 35 to 40 minutes, or until a toothpick inserted into the center comes out clean. Let cool before serving.', 
+        ingredients: ['lemon-cake-mix','eggs','lemon-instant-pudding','water','oil','poppy-seeds'] 
+    },
+    { 
+        name: 'Light Old Fashion Fruit Cake: Preheat oven to 300°F (150°C). Grease and flour a 10 inch tube pan. In a large bowl, cream together butter and sugar until light and fluffy. Beat in eggs one at a time. Stir in brandy flavoring. Combine flour, baking powder, salt, cinnamon, and nutmeg; gradually mix into creamed mixture. Fold in pecans, pineapple, cherries, and raisins. Pour batter into prepared pan. Bake for 2 to 2 1/2 hours, or until a toothpick inserted into the center comes out clean. Let cool in pan for 10 minutes before removing to wire rack to cool completely.', 
+        ingredients: ['flour','baking-powder','salt','cinnamon','nutmeg','pecans','canned-pineapple','whole-canned-cherries','golden-raisins','butter','sugar','eggs','brandy-flavoring'] 
+    },
+    { 
+        name: 'My Best Gingerbread: Preheat oven to 350°F (175°C). Grease and flour a 9 inch square pan. In a large bowl, cream together sugar and butter. Beat in eggs until smooth. Stir in molasses. In a separate bowl, sift together flour, baking soda, cinnamon, ginger, cloves, and salt. Blend dry ingredients into wet mixture. Stir in hot water until batter is smooth. Pour batter into prepared pan. Bake for 1 hour, or until a toothpick inserted into the center comes out clean. Let cool before serving.', 
+        ingredients: ['sugar','butter','eggs','molasses','flour','soda','cinnamon','ginger','cloves','salt','hot water'] 
+    },
+    { 
+        name: 'Oatmeal Cake: Preheat oven to 350°F (175°C). Grease and flour a 9x13 inch baking pan. In a large bowl, combine oats and hot water. Let stand for 20 minutes. In a separate bowl, cream together sugars and margarine. Beat in eggs one at a time. Stir in oat mixture. In another bowl, sift together flour, salt, baking soda, nutmeg, and cinnamon. Gradually add dry ingredients to creamed mixture. Stir in nuts and milk. Pour batter into prepared pan. Bake for 30 to 35 minutes, or until a toothpick inserted into the center comes out clean. Let cool before serving.', 
+        ingredients: ['oatmeal','hot-water','brown-sugar','white-sugar','margarine','eggs','flour','salt','soda','nutmeg','cinnamon','nuts','milk'] 
+    },
+    { 
+        name: 'Orange Angel Food Cake: Preheat oven to 350°F (175°C). In a large mixing bowl, combine angel food cake mix and orange juice. Beat until well blended. Pour batter into an ungreased 10 inch tube pan. Bake for 35 to 40 minutes, or until top is golden brown and springs back when lightly tapped. Invert pan and let cool completely. Once cooled, remove cake from pan. Spread whipped topping over cake and garnish with yogurt.', 
+        ingredients: ['angel-food-cake-mix','orange-juice','whipped-topping','plain-low-fat-yogurt'] 
+    },
+    { 
+        name: 'Orange Poppy Seed Pound Cake: Preheat oven to 350°F (175°C). Grease and flour a 10 inch tube pan. In a large bowl, cream together butter and sugar until light and fluffy. Beat in vanilla and orange peel. In a separate bowl, sift together flour, baking powder, baking soda, and salt. Gradually add dry ingredients to creamed mixture. Stir in orange juice and eggs one at a time. Fold in poppy seeds. Pour batter into prepared pan. Bake for 60 to 70 minutes, or until a toothpick inserted into the center comes out clean. Let cool in pan for 10 minutes before removing to wire rack to cool completely. Dust with powdered sugar before serving.', 
+        ingredients: ['butter','sugar','vanilla','orange-peel','unsifted-cake-flour','orange-juice','eggs','baking-powder','baking-soda','salt','poppy-seeds','powdered-sugar'] 
+    },
+    { 
+        name: 'Pineapple cake: Preheat oven to 350°F (175°C). Grease and flour a 9x13 inch baking pan. In a large bowl, mix together crushed pineapple and cake mix until well blended. Pour batter into prepared pan. Bake for 25 to 30 minutes, or until a toothpick inserted into the center comes out clean. Let cool before serving.', 
+        ingredients: ['pineapple','yellow-cake-mix','butter','almonds'] 
+    },
+    { 
+        name: 'Pineapple Carrot Cake: Preheat oven to 350°F (175°C). Grease and flour a 9x13 inch baking pan. In a large bowl, beat together oil, sugar, and eggs until creamy. Stir in flour, baking soda, salt, and cinnamon until well blended. Fold in pineapple, carrots, and walnuts. Pour batter into prepared pan. Bake for 45 to 50 minutes, or until a toothpick inserted into the center comes out clean. Let cool completely before frosting.', 
+        ingredients: ['oil','sugar','eggs','flour','soda','salt','cinnamon','vanilla','pineapple','carrots','walnuts','cream-cheese','margarine','powdered-sugar','vanilla','water'] 
+    },
+    { 
+        name: 'Potato Cake: Preheat oven to 350°F (175°C). Grease and flour a 9x13 inch baking pan. In a large bowl, cream together sugar and shortening. Beat in milk and mashed potatoes until well blended. Stir in eggs and vanilla. Gradually mix in flour, baking powder, and cocoa until smooth. Fold in chopped nuts. Pour batter into prepared pan. Bake for 30 to 35 minutes, or until a toothpick inserted into the center comes out clean. Let cool before serving.', 
+        ingredients: ['sugar','shortening','milk','mashed-potatoes','eggs','flour','baking-powder','cocoa','walnuts','vanilla'] 
+    },
+    { 
+        name: 'Pumpkin Swirl Cheesecake: Preheat oven to 325°F (165°C). Grease and flour a 9 inch springform pan. In a large bowl, combine vanilla wafer crumbs and melted margarine. Press into bottom of prepared pan. In another bowl, beat together cream cheese, sugar, and vanilla until smooth. Add eggs one at a time, mixing well after each addition. Stir in pumpkin, cinnamon, and nutmeg until smooth. Pour cream cheese mixture over crust in pan. Swirl with knife to create marbled effect. Bake for 55 to 60 minutes, or until center is almost set. Let cool completely before removing from pan. Refrigerate before serving.', 
+        ingredients: ['vanilla-wafer-crumbs','margarine','lite-cream-cheese','sugar','vanilla','eggs','pumpkin','cinnamon','nutmeg'] 
+    },
+    { 
+        name: 'Refrigerator Cake: In a large bowl, combine cornflakes, melted butter, and sugar. Press into bottom of a 9x13 inch baking pan. In a medium bowl, dissolve gelatin in boiling water. Stir in lemon juice and grated lemon rind. Set aside to cool. In a large bowl, beat together eggs, salt, milk, cottage cheese, and lemon mixture. Pour over crust in pan. In a separate bowl, whip heavy cream until stiff peaks form. Spread whipped cream over top of cake. Refrigerate for 3 to 4 hours, or until set.', 
+        ingredients: ['cornflakes','butter','sugar','gelatin','water','eggs','salt','milk','cottage-cheese','grated-lemon-rind','lemon-juice','heavy-cream'] 
+    },
+    { 
+        name: 'Sherry Wine Cake: Preheat oven to 350°F (175°C). Grease and flour a 9x13 inch baking pan. In a large bowl, combine cake mix, instant pudding, eggs, oil, and sherry. Beat until well blended. Pour batter into prepared pan. Bake for 35 to 40 minutes, or until a toothpick inserted into the center comes out clean. Let cool completely before serving.', 
+        ingredients: ['yellow-cake-mix','instant-vanilla-pudding','eggs','oil','sherry','cooking-wine','nutmeg'] 
+    },
+    { 
+        name: 'Special Prune Cake: Preheat oven to 350°F (175°C). Grease and flour a 9x13 inch baking pan. In a large bowl, combine eggs, oil, and sugar. Beat in nutmeg. Stir in flour, salt, soda, and baking powder until well blended. Gradually mix in buttermilk. Fold in chopped prunes and nuts. Pour batter into prepared pan. Bake for 45 to 50 minutes, or until a toothpick inserted into the center comes out clean. Let cool completely before frosting.', 
+        ingredients: ['eggs','oil','sugar','nutmeg','flour','salt','soda','baking-powder','buttermilk','prunes','nuts','sugar','soda-water','white-corn-syrup','butter','vanilla']
+    },
+    { 
+        name: 'Spicy Fruit and Nut Cake: Preheat oven to 350°F (175°C). Grease and flour a 9 inch tube pan. In a large bowl, combine prunes and chopped walnuts. In a separate bowl, sift together flour, baking soda, cinnamon, nutmeg, allspice, and salt. In another bowl, beat together vegetable oil, buttermilk, eggs, and sugar until smooth. Gradually mix in dry ingredients until well blended. Fold in prunes and nuts. Pour batter into prepared pan. Bake for 1 hour, or until a toothpick inserted into the center comes out clean. Let cool before serving.', 
+        ingredients: ['pitted-prunes','walnuts','flour','baking-soda','cinnamon','nutmeg','allspice','salt','vegetable-oil','buttermilk','eggs','sugar','soda','butter-salt'] 
+    },
+	
+	{ 
+    name: 'Strawberry Spice Loaf: Preheat the oven to 350°F (175°C). Grease and flour a loaf pan. In a mixing bowl, combine flour, sugar, salt, cinnamon, and nutmeg. Stir in soda water, oil, and eggs until well blended. Fold in strawberries. Pour batter into prepared loaf pan and bake for 50 to 60 minutes, or until a toothpick inserted into the center comes out clean.', 
+    ingredients: ['flour', 'sugar', 'salt', 'cinnamon', 'nutmeg', 'soda-water', 'oil', 'eggs', 'strawberries'] 
+},
+
+{ 
+    name: 'Three Layer Chocolate Mayonnaise Cake: Preheat the oven to 350°F (175°C). Grease and flour three 9-inch round cake pans. In a large mixing bowl, combine flour, sugar, cocoa, baking powder, and baking soda. Stir in mayonnaise, water, and vanilla until smooth. Divide batter evenly between the prepared pans. Bake for 25 to 30 minutes, or until a toothpick inserted into the center comes out clean.', 
+    ingredients: ['flour', 'sugar', 'cocoa', 'baking-powder', 'baking-soda', 'mayo', 'water', 'vanilla'] 
+},
+
+{ 
+    name: 'Two Layer Chocolate Mayonnaise Cake: Preheat the oven to 350°F (175°C). Grease and flour two 9-inch round cake pans. In a large mixing bowl, combine flour, sugar, cocoa, baking powder, and baking soda. Stir in mayonnaise, water, and vanilla until smooth. Divide batter evenly between the prepared pans. Bake for 25 to 30 minutes, or until a toothpick inserted into the center comes out clean.', 
+    ingredients: ['flour', 'sugar', 'cocoa', 'baking-powder', 'baking-soda', 'mayo', 'water', 'vanilla'] 
+},
+
+{ 
+    name: 'Upside Down Cake: Preheat the oven to 350°F (175°C). Melt butter in a 9x13 inch baking pan. Sprinkle brown sugar over melted butter. Arrange fruit slices over the sugar mixture. In a mixing bowl, cream together eggs and vanilla. Stir in fruit juice. In a separate bowl, sift together flour, baking powder, and salt. Gradually add the dry ingredients to the creamed mixture. Spread batter evenly over the fruit slices. Bake for 35 to 40 minutes, or until a toothpick inserted into the center comes out clean.', 
+    ingredients: ['butter', 'brown-sugar', 'eggs', 'fruit-juice', 'vanilla', 'flour', 'baking-powder', 'salt', 'fruit-slices'] 
+},
+
+{ 
+    name: 'Blue Chip Cookies: Preheat the oven to 375°F (190°C). In a large mixing bowl, cream together butter, sugar, and brown sugar until smooth. Beat in vanilla and eggs until light and fluffy. Combine flour, baking soda, and salt; gradually stir into the creamed mixture. Fold in chocolate chips and walnuts. Drop dough by rounded tablespoonfuls onto ungreased cookie sheets. Bake for 8 to 10 minutes, or until lightly golden brown.', 
+    ingredients: ['butter', 'sugar', 'brown-sugar', 'vanilla', 'eggs', 'flour', 'baking-soda', 'salt', 'chocolate-chips', 'walnuts'] 
+},
+
+{ 
+    name: 'Bourbon Balls: In a mixing bowl, combine semi-sweet chocolate chips, light corn syrup, bourbon, vanilla wafer crumbs, powdered sugar, and walnuts. Mix until well blended. Shape into 1-inch balls. Roll balls in additional powdered sugar. Store in an airtight container.', 
+    ingredients: ['semi-sweet-chocolate-chips', 'light-corn-syrup', 'bourbon', 'vanilla-wafer-crumbs', 'powdered-sugar', 'walnuts'] 
+},
+
+{ 
+    name: 'Chocolate Crisp Bran Cookies: Preheat the oven to 375°F (190°C). In a large mixing bowl, cream together margarine and sugar until light and fluffy. Beat in eggs and vanilla. Combine flour, baking soda, and salt; gradually add to the creamed mixture. Stir in All-Bran cereal and chocolate chips. Drop dough by rounded teaspoonfuls onto ungreased baking sheets. Bake for 10 to 12 minutes, or until lightly browned.', 
+    ingredients: ['flour', 'baking-soda', 'salt', 'margarine', 'sugar', 'eggs', 'vanilla', 'all-bran-cereal', 'chocolate-chips'] 
+},
+
+{ 
+    name: 'Chocolate Peanut Brunch Bars: Preheat the oven to 350°F (175°C). In a large mixing bowl, cream together margarine, brown sugar, and peanut butter until light and fluffy. Beat in egg yolk and vanilla. Combine flour and salt; gradually add to the creamed mixture. Stir in chocolate chips and Special K cereal. Spread mixture evenly into a greased 9x13 inch baking pan. Bake for 25 to 30 minutes, or until golden brown.', 
+    ingredients: ['flour', 'brown-sugar', 'margarine', 'peanut-butter', 'egg-yolk', 'salt', 'vanilla', 'chocolate-chips', 'special-k-cereal'] 
+},
+
+{ 
+    name: 'Chocolate Trio Squares: Preheat the oven to 350°F (175°C). Grease a 9x13 inch baking pan. In a saucepan, melt margarine. Remove from heat and stir in flour until smooth. Add eggs, one at a time, beating well after each addition. Stir in brown sugar, coconut, and vanilla. Spread batter evenly into the prepared pan. Bake for 25 to 30 minutes, or until set. In a small saucepan, melt chocolate chips with corn syrup and water, stirring until smooth. Spread over cooled bars. Sprinkle with nuts. Let stand until set before cutting into squares.', 
+    ingredients: ['margarine', 'sifted-flour', 'salt', 'eggs', 'light-brown-sugar', 'coconut', 'vanilla', 'flour', 'semi-sweet-chocolate-chips', 'light-corn-syrup', 'water', 'nuts'] 
+},
+
+{ 
+    name: 'Christmas Logs: Preheat the oven to 350°F (175°C). In a mixing bowl, combine walnuts, pitted dates, flake coconut, brown sugar, and eggs. Mix until well blended. Shape mixture into logs and place on a greased baking sheet. Bake for 12 to 15 minutes, or until lightly golden brown.', 
+    ingredients: ['walnuts', 'pitted-dates', 'flake-coconut', 'brown-sugar', 'eggs'] 
+},
+
+{ 
+    name: 'Christmas Snowballs: Preheat the oven to 375°F (190°C). In a large mixing bowl, cream together butter, vanilla, water, and salt until light and fluffy. Beat in sugar until smooth. Gradually stir in flour. Fold in chocolate chips and walnuts. Shape dough into 1-inch balls. Place balls 2 inches apart on ungreased baking sheets. Bake for 12 to 15 minutes, or until golden brown. Roll hot cookies in powdered sugar. Cool completely on wire racks.', 
+    ingredients: ['butter', 'vanilla', 'water', 'salt', 'sugar', 'flour', 'chocolate-chips', 'walnuts', 'powdered-sugar'] 
+},
+
+{ 
+    name: 'Crisp Oatmeal Fruit Strips: Preheat the oven to 375°F (190°C). In a large mixing bowl, cream together butter and sugar until light and fluffy. Beat in eggs until well blended. Gradually add flour, baking soda, and salt; mix well. Stir in raisins and rolled oats. Spread mixture evenly into a greased 15x10 inch baking pan. Bake for 15 to 20 minutes, or until lightly browned. Cut into strips while still warm.', 
+    ingredients: ['butter', 'sugar', 'eggs', 'flour', 'soda', 'raisins', 'rolled-oats'] 
+},
+
+{ 
+    name: 'Frosted Delights: Preheat the oven to 375°F (190°C). In a large mixing bowl, cream together shortening, granulated sugar, and eggs until light and fluffy. Beat in vanilla. In a separate bowl, sift together flour, salt, and baking soda. Gradually add dry ingredients to the creamed mixture. Beat egg white until stiff peaks form; fold into batter. Stir in chopped nuts. Drop dough by rounded tablespoonfuls onto ungreased baking sheets. Bake for 10 to 12 minutes, or until lightly browned. Cool completely on wire racks. Frost with powdered sugar glaze.', 
+    ingredients: ['sifted-flour', 'salt', 'baking-soda', 'shortening', 'granulated-sugar', 'eggs', 'vanilla', 'brown-sugar', 'egg-white', 'nuts'] 
+},
+
+{ 
+    name: 'Ginger Snap Bars: Preheat the oven to 350°F (175°C). Grease a 9x13 inch baking pan. In a large mixing bowl, cream together brown sugar and eggs until smooth. Beat in margarine, molasses, and vanilla until well blended. In a separate bowl, sift together flour, baking soda, salt, cinnamon, ginger, and cloves. Gradually add dry ingredients to the creamed mixture. Stir in milk and nuts until well blended. Spread batter evenly into the prepared pan. Bake for 20 to 25 minutes, or until set. Cool completely before cutting into bars.', 
+    ingredients: ['brown-sugar', 'eggs', 'margarine', 'molasses', 'vanilla', 'flour', 'soda', 'salt', 'cinnamon', 'ginger', 'cloves', 'milk', 'nuts'] 
+},
+
+{ 
+    name: 'Ginger Snaps: Preheat the oven to 375°F (190°C). In a large mixing bowl, cream together shortening and brown sugar until light and fluffy. Beat in eggs and molasses until smooth. In a separate bowl, sift together flour, ginger, cinnamon, cloves, baking soda, and salt. Gradually add dry ingredients to the creamed mixture; mix well. Shape dough into 1-inch balls and roll in granulated sugar. Place balls 2 inches apart on ungreased baking sheets. Bake for 10 to 12 minutes, or until set. Cool on wire racks.', 
+    ingredients: ['shortening', 'brown-sugar', 'eggs', 'molasses', 'ginger', 'cinnamon', 'cloves', 'soda', 'flour'] 
+},
+
+{ 
+    name: 'Honey Graham Bars: Preheat the oven to 350°F (175°C). In a large mixing bowl, combine flour, whole wheat flour, brown sugar, shortening, and cinnamon until crumbly. Stir in honey, oil, and water until mixture forms a dough. Press dough evenly into a greased 9x13 inch baking pan. Bake for 25 to 30 minutes, or until golden brown. Cool completely before cutting into bars.', 
+    ingredients: ['flour', 'whole-wheat-flour', 'brown-sugar', 'shortening', 'cinnamon', 'honey', 'oil', 'water'] 
+},
+
+{ 
+    name: 'Pastal Cookies: Preheat the oven to 375°F (190°C). In a large mixing bowl, cream together fruit jello, margarine, and sugar until light and fluffy. Beat in eggs and vanilla until well blended. In a separate bowl, sift together flour, baking powder, and salt. Gradually add dry ingredients to the creamed mixture. Drop dough by rounded teaspoonfuls onto ungreased baking sheets. Bake for 10 to 12 minutes, or until edges are lightly browned. Cool on wire racks.', 
+    ingredients: ['fruit-jello', 'margarine', 'sugar', 'eggs', 'vanilla', 'flour', 'baking-powder', 'salt'] 
+},
+
+{ 
+    name: 'Lemon Squares: Preheat the oven to 350°F (175°C). Grease a 9x13 inch baking pan. In a mixing bowl, cream together margarine and powdered sugar until light and fluffy. Beat in eggs until smooth. Stir in sugar, baking powder, salt, lemon peel, and lemon juice until well blended. Gradually add flour, mixing until smooth. Spread batter evenly into the prepared pan. Bake for 20 to 25 minutes, or until set. Cool completely before cutting into squares.', 
+    ingredients: ['flour', 'margarine', 'powdered-sugar', 'eggs', 'sugar', 'baking-powder', 'salt', 'lemon-peel', 'lemon-juice'] 
+},
+	{ 
+    name: 'Minties: Preheat the oven to 350°F (175°C). Grease a 9x13 inch baking pan. In a large bowl, beat eggs until frothy. Gradually add oil and sugar, beating well after each addition. Stir in mint apple jelly. Combine flour, baking powder, and salt; gradually add to egg mixture. Spread batter into prepared pan. Bake for 25-30 minutes or until lightly browned. Cool on a wire rack before cutting into bars.',
+    ingredients: ['eggs','oil','sugar','mint-apple-jelly','flour','baking-powder','salt']
+},
+{ 
+    name: 'Oatmeal: Preheat the oven to 350°F (175°C). Grease and flour a 9x13 inch baking pan. In a large bowl, cream together brown sugar and shortening until light and fluffy. Beat in eggs, one at a time. Stir in raisin liquid. Combine flour, soda, oats, salt, raisins, cinnamon, and allspice; gradually add to creamed mixture and mix well. Stir in walnuts. Spread batter into prepared pan. Bake for 25-30 minutes or until golden brown. Cool completely before cutting into bars.',
+    ingredients: ['brown-sugar','shortening','eggs','raisin-liquid','soda','flour','oats','salt','raisins','cinnamon','allspice','walnuts']
+},
+{ 
+    name: 'Oatmeal Fudge Bars: Preheat the oven to 350°F (175°C). Grease and flour a 9x13 inch baking pan. In a large bowl, cream together shortening and light brown sugar until smooth. Beat in eggs and vanilla. Combine flour, baking soda, and salt; gradually add to creamed mixture and mix well. Stir in walnuts and oats. Spread two-thirds of the batter into prepared pan. In a microwave-safe bowl, melt butter and chocolate chips; stir until smooth. Stir in sweetened condensed milk until well blended. Pour over batter in pan. Drop remaining batter by teaspoonfuls over the top. Bake for 25-30 minutes or until set. Cool on a wire rack before cutting into bars.',
+    ingredients: ['shortening','light-brown-sugar','eggs','vanilla','flour','baking-soda','salt','walnuts','oats','butter','semi-sweet-Chocolate-chips','sweetened-condensed-milk']
+},
+{ 
+    name: 'Peanut Butter Cookies: Preheat the oven to 375°F (190°C). In a large bowl, cream together sugar, brown sugar, and margarine until light and fluffy. Beat in eggs and peanut butter until smooth. Combine flour, soda, and salt; gradually add to creamed mixture and mix well. Drop by rounded teaspoonfuls onto ungreased baking sheets. Flatten with a fork if desired. Bake for 8-10 minutes or until lightly browned. Cool on wire racks before serving.',
+    ingredients: ['sugar','brown-sugar','margarine','eggs','peanut-butter','flour','soda','salt']
+},
+{ 
+    name: 'Pineapple Graham Crackers: Preheat the oven to 350°F (175°C). Grease and flour a 9x13 inch baking pan. In a large bowl, cream together butter and light brown sugar until smooth. Beat in eggs and vanilla. Stir in flour until well blended. Spread half of the batter into prepared pan. Arrange graham crackers over batter. Spread pineapple over crackers. Top with remaining batter. Sprinkle with walnuts. Bake for 30-35 minutes or until golden brown. Cool completely before cutting into bars.',
+    ingredients: ['butter','light-brown-sugar','eggs','flour','graham-cracker','pineapple','walnuts']
+},
+{ 
+    name: 'Prune Nut Bars: Preheat the oven to 350°F (175°C). Grease and flour a 9x13 inch baking pan. In a large bowl, cream together margarine, sugar, and brown sugar until light and fluffy. Beat in eggs, lemon juice, and vanilla. Combine flour, baking powder, and salt; gradually add to creamed mixture and mix well. Stir in prunes, walnuts, and coconut. Spread batter into prepared pan. Bake for 25-30 minutes or until lightly browned. Cool on a wire rack before cutting into bars.',
+    ingredients: ['pitted-prunes','margarine','sugar','sifted-flour','baking-powder','salt','brown-sugar','eggs','lemon-juice','vanilla','walnuts','coconut']
+},
+{ 
+    name: 'Pumpkin Oatmeal Cookies: Preheat the oven to 350°F (175°C). Grease baking sheets. In a large bowl, beat together eggs and sugar until smooth. Stir in oatmeal, oil, soda, salt, nuts, raisins, and spices until well combined. Drop by teaspoonfuls onto prepared baking sheets. Bake for 10-12 minutes or until golden brown. Cool on wire racks before serving.',
+    ingredients: ['eggs','sugar','oatmeal','oil','soda','salt','nuts','raisins','allspice','ginger','pumpkin-pie-spice','cinnamon','cloves','nutmeg']
+},
+{ 
+    name: 'Snicker-Doodles: Preheat the oven to 400°F (200°C). Grease baking sheets. In a large bowl, cream together margarine and sugars until light and fluffy. Beat in eggs and vanilla. Combine flour, cream of tartar, baking soda, and salt; gradually add to creamed mixture and mix well. In a small bowl, combine sugar and cinnamon. Shape dough into 1-inch balls; roll in cinnamon-sugar mixture. Place 2 inches apart on prepared baking sheets. Flatten with a fork. Bake for 8-10 minutes or until edges are lightly golden. Cool on wire racks before serving.',
+    ingredients: ['flour','cream-of-tartar','baking-soda','salt','margarine','sugar','eggs','vanilla']
+},
+{ 
+    name: 'Soft Sugar Cookies: Preheat the oven to 375°F (190°C). Grease baking sheets. In a large bowl, cream together margarine and sugar until light and fluffy. Beat in eggs and vanilla until smooth. Combine flour, salt, baking soda, and baking powder; gradually add to creamed mixture and mix well. Stir in sour cream. Drop by rounded tablespoonfuls onto prepared baking sheets. Sprinkle with cinnamon-sugar mixture if desired. Bake for 8-10 minutes or until edges are lightly golden. Cool on wire racks before serving.',
+    ingredients: ['margarine','sugar','eggs','vanilla','flour','salt','baking-soda','baking-powder','sour-cream','cinnamon']
+},
+{ 
+    name: 'Thumbprint Cookies: Preheat the oven to 350°F (175°C). Grease baking sheets. In a large bowl, cream together eggs and sugar until light and fluffy. Beat in salt and vanilla. Gradually add flour, mixing well after each addition. Roll dough into 1-inch balls. Place on prepared baking sheets. Press down the center of each ball with your thumb to make an indentation. Bake for 10-12 minutes or until lightly golden. Cool on wire racks. Fill centers with your favorite jam or preserve before serving.',
+    ingredients: ['eggs','sugar','salt','vanilla','flour']
+},
+{ 
+    name: 'Walnut Squares: Preheat the oven to 350°F (175°C). Grease and flour a 9x13 inch baking pan. In a large bowl, cream together margarine and sugar until light and fluffy. Beat in eggs until smooth. Stir in flour and nutmeg until well blended. Fold in chopped nuts. Spread batter into prepared pan. Bake for 20-25 minutes or until lightly golden. Cool completely before cutting into squares.',
+    ingredients: ['margarine','sugar','eggs','flour','nutmeg','nuts']
+},
+{ 
+    name: 'Banana Cream Pie: Preheat the oven to 350°F (175°C). Line a 9-inch pie dish with the baked pastry shell; set aside. In a saucepan, combine cornstarch, sugar, and water until smooth. Bring to a boil; cook and stir for 2 minutes or until thickened. Remove from the heat. Stir in sweetened condensed milk, egg yolks, margarine, and vanilla. Return to the heat; cook and stir until mixture begins to thicken. Remove from the heat; stir in sliced bananas and lemon juice. Pour into prepared pie shell. Cool completely. Garnish with whipped cream before serving.',
+    ingredients: ['baked-pastry-shell','cornstarch','sugar','water','sweetened-condensed-milk','egg-yolk','margarine','vanilla','banana','lemon-juice','whipped-cream']
+},
+{ 
+    name: 'Black Berry Nectarine Pie: Preheat the oven to 375°F (190°C). Line a 9-inch pie dish with the baked pie shell; set aside. In a saucepan, combine blackberries, sugar, cornstarch, and water. Cook over medium heat, stirring constantly until thickened. Remove from heat; stir in sliced nectarines. Pour into prepared pie shell. Bake for 30-35 minutes or until bubbly and crust is golden brown. Cool completely before serving. Serve with whipped cream if desired.',
+    ingredients: ['blackberries','sugar','cornstarch','water','nectarines','baked-pie-shell','whipped-cream']
+},
+{ 
+    name: 'Creamy Apple Pie: Preheat the oven to 375°F (190°C). Line a 9-inch pie dish with the unbaked pie shell; set aside. In a large bowl, combine sliced apples, sugar, flour, salt, and cinnamon. Stir in heavy cream until apples are coated. Pour into prepared pie shell. Bake for 45-50 minutes or until filling is bubbly and crust is golden brown. Cool completely before serving. Serve warm or cold.',
+    ingredients: ['pie-shell','tart-apples','sugar','flour','salt','heavy-cream','cinnamon']
+},
+{ 
+    name: 'Dutch Apple Pie: Preheat the oven to 375°F (190°C). Line a 9-inch pie dish with the unbaked pie shell; set aside. In a large bowl, toss together sliced apples, sugar, and cinnamon until well coated. Spoon into prepared pie shell. In a small bowl, combine flour and butter until crumbly; sprinkle over apples. Bake for 45-50 minutes or until apples are tender and topping is golden brown. Cool on a wire rack before serving.',
+    ingredients: ['apples','sugar','cinnamon','flour','butter']
+},
+{ 
+    name: 'Fresh Strawberry Pie: Preheat the oven to 400°F (200°C). In a saucepan, combine cornstarch, sugar, and water until smooth. Bring to a boil; cook and stir for 2 minutes or until thickened. Remove from heat; stir in butter, strawberries, and lemon juice. Pour into baked pie shell. Chill until set. Serve with whipped cream if desired.',
+    ingredients: ['cornstarch','sugar','water','red-food-coloring','butter','strawberries','lemon-juice','baked-pie-shell','whipped-cream']
+},
+{ 
+    name: 'Lemon Cloud Pie: Preheat the oven to 375°F (190°C). Line a 9-inch pie dish with the graham cracker crust; set aside. In a saucepan, combine sugar, cornstarch, water, and lemon juice until smooth. Bring to a boil; cook and stir for 2 minutes or until thickened. Remove from heat. In a mixing bowl, beat cream cheese until smooth. Gradually beat in hot lemon mixture. Pour into prepared crust. Chill until set. Serve chilled with whipped cream if desired.',
+    ingredients: ['sugar','cornstarch','water','grated-lemon-rind','lemon-juice','eggs','cream-cheese','graham-cracker','whipped-cream']
+},
+{ 
+    name: 'Lemon Luscious Pie: Preheat the oven to 375°F (190°C). Line a 9-inch pie dish with the unbaked pie shell; set aside. In a saucepan, combine sugar, cornstarch, butter, lemon rind, and lemon juice until smooth. Cook over medium heat, stirring constantly until thickened. Remove from heat. In a mixing bowl, beat egg yolks until thick and lemon colored. Gradually stir in hot lemon mixture. Return to heat; cook and stir for 2 minutes or until thickened. Pour into prepared pie shell. Chill until set. Serve chilled with a dollop of whipped cream if desired.',
+    ingredients: ['sugar','cornstarch','butter','grated-lemon-rind','lemon-juice','egg-yolk','milk','sour-cream','pie-shell','whipped-cream']
+},
+{ 
+    name: 'Lemon Meringue Pie: Preheat the oven to 350°F (175°C). Line a 9-inch pie dish with the unbaked pie shell; set aside. In a saucepan, combine sugar, cornstarch, salt, and hot water until smooth. Cook over medium heat, stirring constantly until thickened. Remove from heat. Stir in lemon juice, egg yolks, and butter. Return to heat; cook and stir for 2 minutes or until thickened. Pour into prepared pie shell. In a mixing bowl, beat egg whites until stiff peaks form. Gradually beat in sugar until glossy. Spread meringue over hot filling, sealing edges to crust. Bake for 12-15 minutes or until golden brown. Cool on a wire rack before serving.',
+    ingredients: ['sugar','cornstarch','salt','hot-water','lemon-juice','egg-yolk','egg-white','butter','pie-shell']
+},
+	{ 
+    name: 'Old Fashion Apple Pie: Preheat the oven to 425°F (220°C). Line a 9-inch pie dish with the unbaked pie shell; set aside. In a large bowl, toss together sliced apples, sugar, and cinnamon. Pour into prepared pie shell. Dot with butter. Cover with top crust, and seal edges. Cut slits in top crust. Bake for 40 to 50 minutes, or until crust is golden brown and filling is bubbly. Cool on wire rack before serving.',
+    ingredients: ['apples','sugar','cinnamon','water','butter']
+},
+
+{ 
+    name: 'Peach Almond Pie: Preheat the oven to 425°F (220°C). Line a 9-inch pie dish with the unbaked pie shell; set aside. In a large bowl, toss together sliced peaches, lemon juice, sugar, cornstarch, melted butter, salt, and almond extract. Pour into prepared pie shell. Cover with top crust, and seal edges. Cut slits in top crust. Bake for 40 to 50 minutes, or until crust is golden brown and filling is bubbly. Cool on wire rack before serving.',
+    ingredients: ['peaches','lemon-juice','sugar','cornstarch','butter','salt','almond-extract','pie-shell']
+},
+
+{ 
+    name: 'Peach Parfait Pie: Preheat the oven to 375°F (190°C). Line a 9-inch pie dish with the unbaked pie shell; set aside. In a saucepan, combine sliced peaches and hot water. Cook over medium heat until peaches are softened. Cool slightly. In a large bowl, fold softened vanilla ice cream into peach mixture. Pour into prepared pie shell. Freeze until firm. Serve with whipped cream before serving.',
+    ingredients: ['peaches','hot-water','vanilla-ice-cream','sugar','baked-pie-shell','heavy-cream']
+},
+
+{ 
+    name: 'Peanut Butter Ice Cream Pie: Preheat the oven to 375°F (190°C). In a medium bowl, combine graham cracker crumbs, sugar, and melted margarine. Press mixture into the bottom of a 9-inch pie dish. Bake for 8-10 minutes, or until set. Cool completely. In a large bowl, beat whipping cream until stiff peaks form. Fold in softened vanilla ice cream and peanut butter until well combined. Spoon mixture into cooled crust. Freeze until firm. Serve with whipped cream before serving.',
+    ingredients: ['graham-cracker','sugar','margarine','whipping-cream','vanilla-ice-cream','peanut-butter']
+},
+
+{ 
+    name: 'Peanut Butter Pie: Preheat the oven to 350°F (175°C). Line a 9-inch pie dish with the unbaked pie shell; set aside. In a mixing bowl, beat together light corn syrup, sugar, eggs, and vanilla until well combined. Stir in peanut butter until smooth. Pour mixture into prepared pie shell. Bake for 45-50 minutes, or until filling is set. Cool on wire rack before serving. Serve with whipped cream if desired.',
+    ingredients: ['light-corn-syrup','sugar','eggs','vanilla','peanut-butter','pie-shell', 'whipped-cream']
+},
+
+{ 
+    name: 'Peanut Butter Pie: Preheat the oven to 350°F (175°C). Line a 9-inch pie dish with the unbaked pie shell; set aside. In a mixing bowl, beat together dark corn syrup, sugar, eggs, and vanilla until well combined. Stir in peanut butter until smooth. Pour mixture into prepared pie shell. Bake for 45-50 minutes, or until filling is set. Cool on wire rack before serving. Serve with whipped cream if desired.',
+    ingredients: ['dark-corn-syrup','sugar','eggs','vanilla','peanut-butter','pie-shell','whipped-cream']
+},
+
+{ 
+    name: 'Pie Crust: In a large mixing bowl, combine flour and salt. Cut in shortening until mixture resembles coarse crumbs. Gradually add ice water, tossing with a fork until dough forms a ball. Divide dough in half, and shape into two balls. Wrap in plastic wrap and refrigerate for at least 30 minutes before rolling out.',
+    ingredients: ['flour','salt','shortening','ice water']
+},
+
+{ 
+    name: 'Sour Cream Raisin Pie: Preheat the oven to 350°F (175°C). Line a 9-inch pie dish with the unbaked pie shell; set aside. In a saucepan, combine raisins and water. Cook over medium heat until raisins are plumped. Drain and cool slightly. In a mixing bowl, combine flour, sugar, egg yolk, sour cream, vanilla, and nutmeg until smooth. Fold in plumped raisins. Pour mixture into prepared pie shell. Bake for 30-35 minutes, or until filling is set. Cool on wire rack before serving.',
+    ingredients: ['raisins','water','flour','sugar','egg-yolk','sour-cream','vanilla','nutmeg']
+},
+
+{ 
+    name: 'Walnut Pie: Preheat the oven to 350°F (175°C). Line a 9-inch pie dish with the unbaked pie shell; set aside. In a mixing bowl, combine sugar, light corn syrup, eggs, evaporated milk, vanilla, flour, and nutmeg until well combined. Stir in chopped walnuts. Pour mixture into prepared pie shell. Bake for 45-50 minutes, or until filling is set. Cool on wire rack before serving.',
+    ingredients: ['sugar','light-corn-syrup','eggs','evaporated-milk','vanilla','flour','nutmeg']
+},
+
+{ 
+    name: 'Angel Hash: In a saucepan, combine cornstarch and sugar. Gradually stir in pineapple juice until smooth. Cook over medium heat, stirring constantly, until thickened. Remove from heat and cool completely. In a large mixing bowl, fold together whipped cream, pineapple tidbits, chopped walnuts, marshmallows, and sliced banana. Gently fold in cooled pineapple mixture. Serve chilled.',
+    ingredients: ['cornstarch','sugar','pineapple-juice','eggs','whipped-cream','pineapple-tidbits','walnuts','marshmallows','banana']
+},
+
+{ 
+    name: 'Blue Cheese Dressing: In a blender, combine crumbled blue cheese, buttermilk, mayonnaise, white sauteed wine, garlic powder, and accent seasoning mix. Blend until smooth. Transfer to a container and refrigerate until ready to use.',
+    ingredients: ['blue-cheese','buttermilk','mayo','white-sauteed-wine','garlic-powder','accent-seasoning-mix']
+},
+
+{ 
+    name: 'Broccoli Curry Salad: In a large mixing bowl, combine broccoli florets, raisins, chopped red onion, sunflower seeds, mayonnaise, celery, red wine vinaigrette, and curry powder. Toss until well coated. Refrigerate for at least 1 hour before serving.',
+    ingredients: ['broccoli','raisins','red-onion','sunflower-seed','mayo','celery','red-wine-vinaigrette','curry']
+},
+
+{ 
+    name: 'Broccoli Salad: In a large mixing bowl, combine chopped broccoli, shredded mozzarella cheese, diced red onion, cooked and crumbled bacon, mayonnaise, sugar, and vinegar. Toss until well coated. Refrigerate for at least 1 hour before serving.',
+    ingredients: ['broccoli','mozzarella-cheese','red-onion','bacon','mayo','sugar','vinegar']
+},
+
+{ 
+    name: 'Broccoli Salad With Pineapple: In a large mixing bowl, combine cooked and crumbled bacon, chopped broccoli, drained pineapple tidbits, diced red onion, sunflower seeds, mayonnaise, sugar, and vinegar. Toss until well coated. Refrigerate for at least 1 hour before serving.',
+    ingredients: ['bacon','broccoli','pineapple','red-onion','sunflower-seed','mayo','sugar','vinegar']
+},
+
+{ 
+    name: 'Carrot Carousel: In a saucepan, combine knox unflavored gelatin and orange juice. Cook over medium heat, stirring constantly, until gelatin is dissolved. Remove from heat and cool completely. In a large mixing bowl, combine salt, salad dressing, grated carrots, and drained crushed pineapple. Stir in cooled gelatin mixture until well combined. Transfer to a serving dish and chill until set.',
+    ingredients: ['knox-unflavored-gelatin','orange-juice','salt','salad-dressing','carrots','pineapple']
+},
+	{ 
+    name: 'Coleslaw: In a large mixing bowl, combine shredded cabbage, mayonnaise, sour cream, sugar, horseradish, salt and pepper, and caraway seeds. Toss until well coated. Refrigerate for at least 1 hour before serving.',
+    ingredients: ['cabbage','mayo','sour-cream','sugar','horseradish','salt-and-pepper','caraway-seed']
+},
+
+{ 
+    name: 'Cranberry Mold: In a bowl, dissolve cherry gelatin in hot water. Stir in whole cranberry sauce, sour cream, and chopped nuts. Pour into a mold. Refrigerate until set.',
+    ingredients: ['hot-water','cherry-jello','whole-cranberry-sauce','sour-cream','nuts']
+},
+
+{ 
+    name: 'Cucumbers in Sour Cream: In a mixing bowl, combine sliced cucumbers, salt, pepper, chopped chives, sliced scallions, sour cream, and lemon juice. Toss until well coated. Refrigerate for at least 1 hour before serving.',
+    ingredients: ['cucumbers','salt-and-pepper','chives','scallions','sour-cream','lemon-juice']
+},
+
+{ 
+    name: 'Five Bean Salad: In a large bowl, combine green beans, wax beans, kidney beans, garbanzo beans, bean sprouts, chopped red onion, sugar, vinegar, and oil. Toss until well coated. Refrigerate for at least 1 hour before serving.',
+    ingredients: ['green-beans','wax-beans','kidney-beans','garbanzo-beans','bean-sprouts','red-onion','sugar','vinegar','oil']
+},
+
+{ 
+    name: 'Five Cup Salad: In a large bowl, combine drained pineapple chunks, drained mandarin oranges, shredded coconut, mini marshmallows, and sour cream. Mix until well combined. Refrigerate for at least 1 hour before serving.',
+    ingredients: ['pineapple','mandarin-oranges','coconut','marshmallows','sour-cream']
+},
+
+{ 
+    name: 'Garden Vegtable Pasta: Cook pasta according to package instructions. In a large mixing bowl, combine cooked and cooled pasta, blanched broccoli florets, cauliflower florets, cooked asparagus spears, sliced green onions, sliced radishes, diced tomato, sliced avocado, sliced mushrooms, and Italian dressing. Toss until well coated. Refrigerate for at least 1 hour before serving.',
+    ingredients: ['broccoli','cauliflower','asparagus','green-onions','radishes','tomato','avocado','mushrooms','pasta','italian-dressing']
+},
+
+{ 
+    name: 'Green Bean Salad: In a large bowl, combine cooked green beans, salad oil, white vinegar, sliced red onion, grated lemon rind, crumbled blue cheese, and chopped walnuts. Toss until well coated. Serve chilled.',
+    ingredients: ['beans','salad-oil','white-vinegar','red-onion','grated-lemon-rind','blue-cheese','walnuts']
+},
+
+{ 
+    name: 'Heavenly Cheese Salad: In a bowl, dissolve lemon gelatin in boiling water. Stir in crushed pineapple with juice. Cool until partially set. In a separate bowl, beat softened cream cheese until smooth. Gradually beat in gelatin mixture. Stir in chopped walnuts. Fold in whipped cream. Pour into a mold. Refrigerate until set.',
+    ingredients: ['lemon-jello','pineapple','water','cream-cheese','walnuts','whipped-cream']
+},
+
+{ 
+    name: 'Horseradish Dressing: In a mixing bowl, combine horseradish, mayonnaise, sour cream, buttermilk, oil, onion powder, salt and pepper, and vinegar. Whisk until well combined. Refrigerate until ready to use.',
+    ingredients: ['horseradish','mayo','sour-cream','buttermilk','oil','onion-powder','salt-and-pepper','vinegar']
+},
+
+{ 
+    name: 'Lemon Cloud Salad: In a bowl, dissolve lemon gelatin in boiling water. Stir in drained mandarin oranges and drained pineapple tidbits. Chill until partially set. Fold in sliced banana and prepared whipped topping. Pour into a mold. Refrigerate until set.',
+    ingredients: ['lemon-jello','mandarin-oranges','pineapple-tidbits','banana','dream-whip']
+},
+
+{ 
+    name: 'Lima Bean Salad: In a mixing bowl, combine cooked lima beans, sliced mushrooms, sliced green onions, chopped parsley, dried oregano, vegetable oil, salt and pepper, and garlic powder. Toss until well coated. Refrigerate for at least 1 hour before serving.',
+    ingredients: ['lima-beans','mushrooms','green-onions','parsley','oregano','vegtable-oil','salt-and-pepper','garlic-powder']
+},
+
+{ 
+    name: 'Pea Salad: In a mixing bowl, combine cooked peas, chopped green onions, bacon bits, sliced water chestnuts, salted cashews, and sour cream. Toss until well coated. Refrigerate for at least 1 hour before serving.',
+    ingredients: ['peas','green-onions','bacon-bits','water-chestnut','salted-cashew','sour-cream']
+},
+
+{ 
+    name: 'School French Dressing: In a mixing bowl, whisk together oil, vinegar, salt and pepper, dry mustard, paprika, and sugar until well combined. Refrigerate until ready to use.',
+    ingredients: ['oil','vinegar','salt-and-pepper','dry-mustard','paprika','sugar']
+},
+
+{ 
+    name: 'Spinach Salad: In a large salad bowl, combine torn spinach leaves, thinly sliced red onion, crumbled cooked bacon, white vinegar, water, sugar, salt, chopped hard-boiled eggs, and sour cream. Toss until well coated. Serve chilled.',
+    ingredients: ['spinach','red-onion','bacon','vinegar','water','sugar','salt','eggs','hard-boiled-egg','sour-cream']
+},
+
+{ 
+    name: 'Spinach Salad with Avocado: In a large bowl, combine torn spinach leaves, sliced avocado, lemon juice, thinly sliced red onion, drained mandarin oranges, sour cream, minced garlic, salt, minced garlic, pepper, grated lemon peel, paprika, vinegar, olive oil, and cooked and crumbled bacon. Toss until well coated. Serve chilled.',
+    ingredients: ['spinach','avocado','lemon-juice','red-onion','mandarin-oranges','sour-cream','garlic','salt','pepper','lemon-peel','paprika','vinegar','olive-oil','bacon']
+},
+
+{ 
+    name: 'Spinach Salad with Alfalfa: In a large bowl, combine sliced onion, rinsed alfalfa sprouts, bacon bits, grated jack cheese, sunflower seeds, mayonnaise, ketchup, lemon juice, and sugar. Toss until well coated. Serve chilled.',
+    ingredients: ['onions','alfalfa-sprouts','bacon-bits','grated-jack-cheese','sunflower-seeds','mayo','catsup','lemon-juice','sugar']
+},
+
+{ 
+    name: 'Summer Fruit Salad: In a large bowl, combine drained pineapple chunks, drained mandarin orange segments, halved seedless grapes, diced cantaloupe, diced watermelon, mini marshmallows, and sour cream. Toss until well coated. Serve chilled.',
+    ingredients: ['pineapple','mandarin-oranges','seedless-grapes','cantaloupe','watermelon','marshmallows','sour-cream']
+},
+
+{ 
+    name: 'Top Ramen Salad: Cook and drain chicken ramen according to package instructions. In a large bowl, combine cooked ramen noodles, oil, vinegar, sugar, salad greens, thinly sliced red onion, and thawed frozen peas. Toss until well coated. Serve chilled.',
+    ingredients: ['chicken-ramen','oil','vinegar','sugar','salad-greens','red-onion','peas']
+},
+
+{ 
+    name: 'Zucchini Apple Slaw: In a large bowl, whisk together mayonnaise, vinegar, sugar, and caraway seeds. Add thinly sliced zucchini, sliced green onions, and diced tart apples. Toss until well coated. Season with salt and pepper to taste. Serve chilled.',
+    ingredients: ['mayo','vinegar','sugar','caraway-seed','zucchini','green-onions','tart-apples','salt-and-pepper']
+},
+
+{ 
+    name: 'Broccoli Chinese Soup: In a large pot, combine diced potato, chopped broccoli, sliced carrots, minced garlic clove, chopped onion, salt, and water. Bring to a boil and then reduce heat to simmer until vegetables are tender. Stir in shredded cheddar cheese, chopped fresh dill, and low-fat milk. Heat until cheese is melted and soup is heated through.',
+    ingredients: ['potato','broccoli','carrots','clove-garlic','onions','salt','water','cheddar-cheese','dill','low-fat-milk']
+},
+
+{ 
+    name: 'Chicken Noodle Soup: In a large pot, combine diced chicken, diced potato, sliced carrots, sliced celery, chopped onion, chicken bouillon, poultry seasoning, salt, and water. Bring to a boil and then reduce heat to simmer until vegetables are tender. Stir in cooked noodles and simmer until heated through.',
+    ingredients: ['chicken','potato','carrots','celery','onions','chicken-bouillon','poultry-seasoning','salt','noodle']
+},
+
+{ 
+    name: 'Cleo Clam Chowder: In a large pot, cook chopped bacon until crisp. Remove bacon and drain on paper towels. In the same pot, sauté chopped onion, diced celery, and diced potato until softened. Stir in milk, salt and pepper, dried thyme, and clam juice. Simmer until potatoes are tender. Serve hot, garnished with crispy bacon bits.',
+    ingredients: ['bacon','onions','celery','potato','milk','salt-and-pepper','thyme','clam-juice']
+},
+	{ 
+    name: 'Creamy Zucchini Mushroom Soup: In a pot, sauté sliced zucchini, diced onion, and minced garlic in butter until tender. Add cream of mushroom soup, water, milk, oregano, basil, sour cream, ground pepper, and pine nuts. Simmer until flavors meld and soup is heated through.',
+    ingredients: ['zucchini','onions','garlic','butter','cream-of-mushroom-soup','water','milk','oregano','basil','sour-cream','ground-pepper','pine-nuts']
+},
+
+{ 
+    name: 'Elephant Stew: Brown elephant meat in a large pot. Season with salt and pepper. Add brown gravy and chopped rabbit. Simmer until elephant meat is tender. Serve hot.',
+    ingredients: ['elephant','salt-and-pepper','brown-gravy','rabbit']
+},
+
+{ 
+    name: 'Hungry Bear Vegetable Soup: In a large pot, brown ground beef. Add diced potatoes, sliced carrots, chopped onion, sliced celery, stewed tomatoes, chopped cabbage, and salt. Cover with water and simmer until vegetables are tender.',
+    ingredients: ['hamburger','potato','carrots','onions','celery','stewed-tomatoes','tomato','cabbage','salt']
+},
+
+{ 
+    name: 'Mexican Meatball Soup: In a bowl, mix together ground beef, cooked rice, beaten eggs, chopped onion, garlic powder, oregano, cumin, and chili powder. Form into meatballs and brown in a pot. Add chicken broth, diced tomato, sliced carrots, sliced celery, and tomato sauce. Simmer until meatballs are cooked through and vegetables are tender.',
+    ingredients: ['hamburger','rice','eggs','onions','garlic-powder','oregano','cumin','chili-powder','chicken-broth','tomato','carrots','celery','tomato-sauce']
+},
+
+{ 
+    name: 'Tortilla Soup: In a large pot, heat vegetable oil. Sauté chopped onion, ground cumin, dried oregano, and minced garlic until fragrant. Add chicken broth, water, diced tomato, chopped green chilies, and torn tortillas. Simmer until tortillas are softened. Serve hot, garnished with shredded lettuce, grated Monterey Jack cheese, and lime wedges.',
+    ingredients: ['lime','vegtable-oil','onions','ground-cumin','leaf-oregano','garlic','chicken-broth','water','tomato','green-chillies','tortillas','lettuce','monetary-jack-cheese']
+},
+
+{ 
+    name: 'Minestrone Soup: In a large pot, brown ground beef. Add diced potatoes, chopped onion, sliced carrots, kidney beans, sliced celery, chopped spinach, sliced zucchini, chopped cabbage, diced tomato, tomato sauce, spaghetti sauce, and cooked spaghetti. Simmer until vegetables are tender and flavors meld.',
+    ingredients: ['hamburger','potato','onions','carrots','kidney-beans','celery','spinach','zucchini','cabbage','tomato','tomato-sauce','spaghetti-sauce','spaghetti']
+},
+
+{ 
+    name: 'Chicken and Shrimp Cantonese: In a wok, heat vegetable oil. Stir-fry sliced chicken breast, sliced red pepper, sliced green pepper, and sliced celery until chicken is cooked through and vegetables are tender-crisp. In a bowl, mix together chicken broth, cornstarch, sherry, soy sauce, and sugar. Add to the wok and stir until sauce thickens. Serve hot.',
+    ingredients: ['vegtable-oil','chicken-breast','red-pepper','green-pepper','celery','chicken-broth','cornstarch','sherry','soy-sauce','sugar']
+},
+
+{ 
+    name: 'Chicken with Pineapple: In a skillet, brown chicken breast. In a bowl, mix together sherry, soy sauce, cornstarch, and water. Set aside. In the skillet, add sliced celery, chopped onion, sliced mushrooms, diced pineapple, and sliced green pepper. Stir in the sauce mixture. Cook until chicken is cooked through and sauce is thickened. Serve hot over rice.',
+    ingredients: ['chicken-breast','sherry','soy-sauce','cornstarch','celery','onion','mushrooms','pineapple','green-pepper']
+},
+
+{ 
+    name: 'Chinese Beef: In a wok, stir-fry sliced steak until browned. Remove from wok. In the same wok, stir-fry diced tomato, sliced green pepper, minced garlic, salt, pepper, ground ginger, soy sauce, and sugar until vegetables are tender-crisp. Return steak to wok. In a bowl, mix together cornstarch and water. Add to the wok and stir until sauce thickens. Serve hot over rice.',
+    ingredients: ['steak','tomato','green-pepper','olive-oil','garlic','salt','pepper','ground-ginger','soy-sauce','sugar','bean-sprouts','cornstarch','water']
+},
+
+{ 
+    name: 'Chinese Broccoli: In a wok, stir-fry chopped broccoli until tender-crisp. Add cooked crab, cooked shrimp, beaten egg whites, sliced mushrooms, and chicken broth. Stir in soy sauce. Cook until heated through. Serve hot.',
+    ingredients: ['broccoli','crab','shrimp','egg-white','mushrooms','chicken-broth','soy-sauce']
+},
+
+{ 
+    name: 'Chinese Chicken Salad: In a bowl, mix together soy sauce, dry sherry, water, grated orange peel, anise, and sliced cooked chicken breast. Serve cold, garnished with chopped green onions and shredded lettuce.',
+    ingredients: ['soy-sauce','dry-sherry','water','orange-peel','anise','chicken-breast','green-onions','lettuce']
+},
+
+{ 
+    name: 'Chinese Fried Rice: In a wok, stir-fry diced ham until browned. Add sliced mushrooms and chopped green onions. Stir in cooked rice, soy sauce, and beaten eggs. Cook until heated through and eggs are set. Serve hot.',
+    ingredients: ['ham','oil','mushrooms','green-onions','rice','soy-sauce','eggs']
+},
+
+{ 
+    name: 'Chinese Fried Rice: In a wok, stir-fry diced cooked chicken until browned. Add sliced mushrooms and chopped green onions. Stir in cooked rice, soy sauce, and beaten eggs. Cook until heated through and eggs are set. Serve hot.',
+    ingredients: ['chicken','oil','mushrooms','green-onions','rice','soy-sauce','eggs']
+},
+
+{ 
+    name: 'Chinese Fried Rice: In a wok, stir-fry diced cooked pork until browned. Add sliced mushrooms and chopped green onions. Stir in cooked rice, soy sauce, and beaten eggs. Cook until heated through and eggs are set. Serve hot.',
+    ingredients: ['pork','oil','mushrooms','green-onions','rice','soy-sauce','eggs']
+},
+
+{ 
+    name: 'Chinese Pepper Steak: In a wok, stir-fry sliced steak until browned. Remove from wok. In the same wok, stir-fry diced onion until translucent. Add minced garlic and sliced green pepper. Stir in soy sauce, cornstarch, sugar, pepper, and water. Return steak to wok and stir until heated through and sauce thickens. Serve hot over rice.',
+    ingredients: ['steak','cornstarch','sugar','ginger','soy-sauce','pepper','onions','oil','garlic','water','tomato']
+},
+	{ 
+    name: 'Chinese Roast Pork: Marinate pork in a mixture of sugar, salt, soy sauce, and chicken bouillon. Roast until pork is cooked through and caramelized.',
+    ingredients: ['sugar','salt','soy-sauce','chicken-bouillon','pork']
+},
+
+{ 
+    name: 'Chinese Stir Fried Chicken with Peanuts: Marinate chicken pieces in a mixture of dry sherry and cornstarch. Stir-fry chicken in vegetable oil with ginger, green pepper, green onions, crushed red pepper, and unsalted peanuts. Season with soy sauce and water. Serve hot.',
+    ingredients: ['dry-sherry','cornstarch','chicken','vegtable-oil','ginger-root','green-pepper','green-onions','crushed-red-pepper','unsalted-peanuts','soy-sauce','water']
+},
+
+{ 
+    name: 'Scallops: Season scallops with salt and pepper. Sauté in a pan with soy sauce, rice vinegar, minced garlic, sugar, and chopped green onions until cooked through.',
+    ingredients: ['salt-and-pepper','soy-sauce','rice-vinegar','garlic','sugar','green-onions', 'scallops']
+},
+
+{ 
+    name: 'Chinese Fondue: Prepare cheese fondue with cheese, salsa, spinach, and artichoke hearts. Serve with tortilla chips for dipping.',
+    ingredients: ['cheese','salsa','spinach','artichoke-hearts']
+},
+
+{ 
+    name: 'Golden Nugget Beef: Marinate steak in a mixture of orange juice, sugar, soy sauce, cornstarch, ginger, pepper, and unsalted beef bouillon. Stir-fry beef in vegetable oil with garlic, onion, celery, and rice. Serve hot.',
+    ingredients: ['oranges','sugar','soy-sauce','cornstarch','ginger','pepper','unsalted-beef-bouillon','water','steak','vegtable-oil','garlic','onion','celery','rice']
+},
+
+{ 
+    name: 'Baby Back Ribs: Season ribs with salt, pepper, and chili powder. Grill or bake until cooked through, basting with BBQ sauce.',
+    ingredients: ['ribs','BBQ-sauce', 'salt', 'pepper', 'chili powder']
+},
+
+{ 
+    name: 'Sweet and Sour Meatballs: In a bowl, mix together ground beef, sausage, accent seasoning, salt, chopped onion, bread crumbs, and milk. Form into meatballs and brown in a skillet. In a separate pot, mix together cornstarch, sugar, pineapple juice, vinegar, water, and bouillon cube. Add meatballs and simmer until cooked through and sauce is thickened.',
+    ingredients: ['hamburger','sausage','accent','salt','onions','bread-crumbs','milk','cornstarch','sugar','pineapple-juice','vinegar','water','bouillon-cube']
+},
+
+{ 
+    name: 'Saucy Shrimp over Chinese Noodle Cakes: In a pot, mix together water, cornstarch, soy sauce, and ketchup. Stir in shrimp. In a skillet, sauté minced garlic, ginger, sliced onion, diced green bell pepper, and sliced celery until tender. Add sliced tomato and cook until softened. Stir in shrimp mixture and cook until shrimp are pink and sauce is thickened. Serve over cooked Chinese noodle cakes.',
+    ingredients: ['water','cornstarch','soy-sauce','ketchup','shrimp','vegtable-oil','garlic','ginger','onions','green-bell-pepper','celery','tomato','chinese-noodle-cakes']
+},
+
+{ 
+    name: 'Sole Thermidor: Season fish fillets with salt and pepper. Sauté in a skillet with milk, margarine, flour, lemon juice, grated cheese, chopped green onions, sliced mushrooms, and paprika until fish is cooked through and sauce is thickened.',
+    ingredients: ['fish-fillet','milk','salt','pepper','margarine','flour','lemon-juice','grated-cheese','green-onions','mushrooms','paprika']
+},
+
+{ 
+    name: 'Bake Trout: Wrap trout fillets in bacon and place in a baking dish. Top with sliced onion and bay leaf. Dot with margarine and sprinkle with flour, cracker crumbs, salt, and pepper. Bake until fish is cooked through and topping is golden brown.',
+    ingredients: ['bacon','onions','bay-leaf','margarine','flour','cracker','salt','pepper']
+},
+
+{ 
+    name: 'Cheesy Fillet with Spinach: In a skillet, melt butter and stir in flour. Gradually add chicken bouillon, nutmeg, red pepper, white pepper, and milk, stirring constantly until thickened. Stir in Swiss cheese until melted. Add chopped spinach and lemon juice. Top fish fillets with sauce and sprinkle with grated Parmesan cheese and paprika. Bake until fish is cooked through and topping is golden brown.',
+    ingredients: ['butter','flour','chicken-bouillon','nutmeg','red-pepper','white-pepper','milk','swiss-cheese','spinach','lemon-juice','fish-fillet','parmesan-cheese','salt','paprika']
+},
+
+{ 
+    name: 'Cheese Fondue: Prepare cheese fondue with cheese, salsa, spinach, and artichoke hearts. Serve with bread cubes or crackers for dipping.',
+    ingredients: ['cheese','salsa','spinach','artichoke hearts']
+},
+
+{ 
+    name: 'Hot Crab Dip: In a bowl, mix together cream cheese, mayonnaise, Worcestershire sauce, minced crab meat, minced garlic, and grated cheese. Transfer mixture to a baking dish and bake until bubbly and golden brown. Serve hot with crackers or bread slices.',
+    ingredients: ['cream-cheese','mayo','worchestshire-sauce','crab','garlic','cheese']
+},
+
+{ 
+    name: 'Shrimp Sauteed: In a skillet, melt margarine and sauté shrimp, sliced mushrooms, diced green pepper, and minced garlic until shrimp are pink and vegetables are tender. Serve hot over cooked linguine, garnished with grated Romano cheese and chopped parsley.',
+    ingredients: ['margarine','shrimp','mushrooms','green-pepper','cloves','linguine','grated-romano-cheese','salt','pepper','parsley']
+},
+
+{ 
+    name: 'BBQ Spareribs: Rub ribs with a mixture of salt, pepper, chili powder, and celery salt. In a saucepan, mix together vinegar, Worcestershire sauce, minced garlic, lemon juice, diced onion, ketchup, hot water, and brown sugar. Simmer until flavors meld. Grill or bake ribs, basting with sauce until cooked through and caramelized.',
+    ingredients: ['salt','pepper','chili-powder','celery-salt','vinegar','worchestshire-sauce','garlic','lemon','onions','catsup','hot-water','brown-sugar']
+},
+
+{ 
+    name: 'Sweet and Sour Pork: Marinate pork in a mixture of salt, soy sauce, and cornstarch. Stir-fry pork in oil until browned and cooked through. Serve hot with a side of chicken coating mix for dipping.',
+    ingredients: ['pork','salt','soy-sauce','cornstarch','water','chicken-coating-mix']
+},
+
+{ 
+    name: 'Beef Scallops with Tomato Sauce: Marinate steak in a mixture of chopped tomato, sliced green onions, sugar, salt, and basil. Stir-fry steak in oil until browned. Thicken sauce with cornstarch mixture. Serve hot over cooked spaghetti.',
+    ingredients: ['steak','tomato','green-onions','sugar','salt','basil','cornstarch']
+},
+	{
+    name: 'Veal Scalloping: Prepare veal by dredging it in flour. Heat oil in a skillet over medium-high heat. Add veal and cook until browned on both sides. Add mushrooms, sautéed wine, onion, salt, and pepper. Simmer until veal is cooked through and sauce has thickened.',
+    ingredients: ['veal', 'flour', 'oil', 'mushrooms', 'sauteed-wine', 'onions', 'salt', 'pepper']
+},
+{
+    name: 'Apple Pie: Combine sliced apples with sugar and cinnamon. Place mixture in a pie crust. Dot with butter. Cover with top crust, seal edges, and cut slits in the top crust. Bake until golden brown.',
+    ingredients: ['apples', 'butter', 'flour', 'sugar', 'cinnamon']
+},
+{
+    name: 'Chicken Alfredo: Cook chicken until no longer pink. In a separate pan, melt butter and sauté garlic. Add cream and parmesan cheese, stirring until cheese is melted and sauce is smooth. Serve over cooked pasta with chicken.',
+    ingredients: ['chicken', 'butter', 'cream', 'garlic', 'parmesan-cheese']
+},
+{
+    name: 'Vegetable Stir Fry: Heat oil in a skillet or wok over high heat. Add mixed veggies and stir-fry until tender-crisp. Add soy sauce, sesame oil, minced garlic, and ginger. Cook for an additional minute, then serve.',
+    ingredients: ['mixed-veggies', 'soy-sauce', 'sesame-oil', 'garlic', 'ginger']
+},
+{
+    name: 'Avocado Toast: Toast bread until golden brown. Mash avocado and spread it onto the toast. Season with salt, pepper, and a squeeze of lime juice. Serve immediately.',
+    ingredients: ['avocado', 'bread', 'salt', 'pepper', 'lime']
+},
+{
+    name: 'Almond Cookies: Cream together butter and sugar. Mix in flour, chopped almonds, and vanilla extract. Roll dough into balls and place on a baking sheet. Flatten slightly with a fork. Bake until golden brown.',
+    ingredients: ['almonds', 'butter', 'flour', 'sugar', 'vanilla-extract']
+},
+
+  {
+        name: 'Savory Goulash: Saute onions in wesson oil until translucent. Add steak and brown. Sprinkle paprika, salt, and hot water. Simmer until steak is tender. Stir in tomato sauce and sour cream. Serve over buttered noodles.',
+        ingredients: ['onions', 'wesson-oil', 'steak', 'paprika', 'salt', 'hot-water', 'tomato-sauce', 'sour-cream', 'buttered-noodles']
+    },
+    {
+        name: 'Veal Parmigan: Dredge veal in a mixture of breadcrumbs and grated Parmesan cheese. Fry in hot oil until golden brown and crispy. Serve with a side of tomato sauce.',
+        ingredients: ['oil', 'garlic', 'onions', 'tomato', 'salt', 'pepper', 'tomato-sauce', 'thyme', 'veal', 'eggs', 'bread-crumbs', 'grated-Parmesan-cheese']
+    },
+    {
+        name: 'Teriyaki Steak: Marinate steak in a mixture of soy sauce, white wine, sugar, ginger, and garlic. Grill until desired doneness. Slice thinly and serve.',
+        ingredients: ['soy-sauce', 'white-wine', 'sugar', 'ginger', 'garlic']
+    },
+    {
+        name: 'Beef Stroganoff: Brown steak in oil. Saute garlic and onions until soft. Add flour to make a roux, then gradually stir in mushroom soup and mushrooms. Simmer until sauce thickens. Stir in sour cream. Serve over cooked pasta.',
+        ingredients: ['steak', 'garlic', 'flour', 'salt', 'pepper', 'oil', 'onions', 'mushroom-soup', 'mushrooms', 'sour-cream']
+    },
+    {
+        name: 'Egg Foo Young: Mix together green onions, shrimp, water chestnuts, and bean sprouts. In a separate bowl, beat eggs with butter, flour, sugar, salt, and water. Cook spoonfuls of mixture in a hot pan until golden brown. Serve with soy sauce.',
+        ingredients: ['green-onions', 'shrimp', 'water-chestnut', 'bean-sprouts', 'salt', 'pepper', 'eggs', 'butter', 'flour', 'sugar', 'water', 'soy-sauce']
+    },
+	
+	{
+    name: 'In a Hurry Chicken Curry: Mix together chicken breast, vegetable oil, onion, garlic, green onions, curry powder, powdered sugar, cornstarch, chicken broth, broccoli, apples, and raisins. Cook until chicken is cooked through and sauce is thickened. Serve over rice.',
+    ingredients: ['chicken-breast', 'vegetable-oil', 'onions', 'garlic', 'green-onions', 'curry-powder', 'powdered-sugar', 'cornstarch', 'chicken-broth', 'broccoli', 'apples', 'raisins']
+},
+{
+    name: 'Maryland Fried Chicken: Coat chicken in flour mixed with salt. Fry in vegetable oil until golden brown and cooked through. Drain on paper towels.',
+    ingredients: ['chicken', 'flour', 'salt', 'vegetable-oil', 'water', 'butter', 'milk']
+},
+{
+    name: 'Oven Fried Chicken: Dip chicken in mixture of cream of mushroom soup, milk, and chopped onion. Roll in crushed stuffing mix and place in baking dish. Drizzle melted butter over chicken. Bake uncovered at 350°F (175°C) for 45 minutes.',
+    ingredients: ['chicken', 'cream-of-mushroom-soup', 'milk', 'onion', 'parsley', 'crushed-stuffing mix', 'butter']
+},
+{
+    name: 'Parsley and Parmesan Baked Chicken: Marinate chicken in Italian dressing. Dip in mixture of beaten eggs and water, then in mixture of Parmesan cheese, bread crumbs, parsley, salt, paprika, and pepper. Bake at 375°F (190°C) for 45 minutes or until cooked through.',
+    ingredients: ['Italian-dressing', 'chicken', 'eggs', 'water', 'parmesan-cheese', 'bread-crumbs', 'parsley', 'salt', 'paprika', 'pepper']
+},
+{
+    name: "Sandra's Tree Trimmer Chicken: Marinate chicken in mixture of artichoke hearts, salt, pepper, and flour. Sauté with mushrooms, ham, onion, and garlic until chicken is cooked through. Serve over rice cooked in tomato, red wine, and Italian seasoning. Garnish with parsley.",
+    ingredients: ['artichoke-hearts', 'chicken', 'salt', 'pepper', 'flour', 'mushrooms', 'rice', 'ham', 'onions', 'garlic', 'tomato', 'red-wine', 'Italian-seasoning', 'parsley']
+},
+{
+    name: 'Sauteed Chicken breast: Season chicken breast with salt, pepper, and paprika. Sauté with mushrooms in butter until chicken is cooked through. Deglaze pan with wine cooler. Serve over rice.',
+    ingredients: ['chicken-breast', 'mushrooms', 'butter', 'flour', 'salt', 'pepper', 'wine-cooler', 'bouillon-cube', 'flour', 'garlic', 'salt', 'pepper', 'paprika', 'rice']
+},
+{
+    name: 'Sauteed Chicken Livers: Dredge chicken liver in flour seasoned with salt and pepper. Sauté with onion in butter until browned. Deglaze pan with dry white wine. Season with oregano, poultry seasoning, and parsley. Serve hot.',
+    ingredients: ['chicken-liver', 'butter', 'onion', 'flour', 'salt', 'pepper', 'dry-white-wine', 'oregano', 'poultry-seasoning', 'parsley', 'mushrooms']
+},
+{
+    name: 'Spicy Singapore Wings: Marinate chicken wings in mixture of soy sauce, Louisiana-style hot sauce, melted butter, garlic powder, and ground ginger. Bake at 375°F (190°C) for 30 minutes, turning once.',
+    ingredients: ['chicken-wings', 'soy-sauce', 'Louisiana-style-hot-sauce', 'butter', 'garlic-powder', 'ground-ginger']
+},
+{
+    name: 'Turkey Tenderloin Supreme: Season turkey breast with salt and pepper. Sauté with onion in butter until browned. Add cream of chicken soup and Swiss cheese. Simmer until cheese is melted and sauce is thickened. Serve over rice or noodles.',
+    ingredients: ['turkey-breast', 'butter', 'onion', 'cream-of-chicken-soup', 'Swiss-cheese', 'rice']
+},
+{
+    name: 'Asparagus Stir-Fried: Sauté asparagus in oil with garlic and ginger until tender-crisp. Add chicken stock mixture (chicken stock, soy sauce, and cornstarch). Cook until sauce thickens. Serve hot.',
+    ingredients: ['asparagus', 'oil', 'garlic', 'ginger', 'chicken-stock', 'soy-sauce', 'cornstarch']
+},
+{
+    name: 'Baked Green Beans: Mix green beans with water, chopped onion, minced garlic, tarragon, salt, and pepper. Bake at 350°F (175°C) for 30 minutes or until tender.',
+    ingredients: ['green-beans', 'water', 'onions', 'garlic', 'tarragon', 'salt', 'pepper']
+},
+{
+    name: 'Baked Zucchini with Mushrooms: Sauté mushrooms and onion in chicken broth. Beat eggs with grated zucchini, bread crumbs, Parmesan cheese, dried oregano, and pepper. Stir in cooked mushrooms and onion. Pour mixture into greased baking dish and bake at 350°F (175°C) for 30 minutes or until set.',
+    ingredients: ['mushrooms', 'onions', 'chicken-broth', 'eggs', 'zucchini', 'bread-crumbs', 'Parmesan-cheese', 'dried-oregano', 'pepper', 'green-onions']
+},
+{
+    name: 'Bit O\'Zucchini Bites: Sauté onion and garlic in butter. Add shredded zucchini, beaten eggs, grated cheese, cornmeal, cumin seed, and oregano. Spoon mixture into greased muffin cups and bake at 375°F (190°C) for 20 minutes or until golden brown.',
+    ingredients: ['onions', 'garlic', 'butter', 'zucchini', 'eggs', 'cheese', 'cornmeal', 'cumin-seed', 'oregano']
+},
+{
+    name: 'Cheesy Spinach Bake: Cook spinach according to package directions. Drain and squeeze out excess moisture. Combine with beaten eggs, milk, grated cheese, crumbled white bread, chopped green onions, and grated Parmesan cheese. Pour into greased baking dish and bake at 350°F (175°C) for 45 minutes or until set.',
+    ingredients: ['spinach', 'eggs', 'milk', 'cheese', 'white-bread', 'green-onions', 'Parmesan-cheese']
+},
+{
+    name: 'Company Cabbage: Sauté shredded cabbage in butter until tender. Stir in minced garlic, sour cream, sugar, vinegar, salt, and caraway seed. Cook until heated through. Serve hot.',
+    ingredients: ['butter', 'cabbage', 'garlic', 'sour-cream', 'sugar', 'vinegar', 'salt', 'caraway-seed']
+},
+{
+    name: 'Crisp Potato Pancakes: Grate potatoes and onion. Combine with beaten eggs, salt, and pepper. Form mixture into patties and fry in hot oil until golden brown and crispy.',
+    ingredients: ['red-potatoes', 'onions', 'salt', 'pepper', 'eggs']
+},
+{
+    name: 'Easy Oven Baked Potato: Slice potatoes and onion. Layer in baking dish with butter, minced garlic, salt, pepper, celery seed, and paprika. Bake at 350°F (175°C) for 45 minutes or until tender.',
+    ingredients: ['potato', 'onions', 'butter', 'garlic', 'salt', 'pepper', 'celery-seed', 'paprika']
+},
+{
+    name: 'Eggplant Rollatini: Slice eggplant lengthwise and brush with red wine vinaigrette. Grill until tender. Spread marinara sauce on each slice, then top with ricotta cheese and mozzarella cheese. Roll up and place seam side down in baking dish. Bake at 375°F (190°C) for 20 minutes or until heated through.',
+    ingredients: ['eggs', 'ricotta-cheese', 'mozzarella-cheese', 'parsley', 'pepper', 'eggplant', 'red-wine-vinaigrette', 'marinara-sauce']
+},
+{
+    name: 'Glazed Carrots: Cook carrots in boiling water until tender. Drain and toss with melted butter, powdered sugar, water, and orange marmalade. Cook over low heat until glazed.',
+    ingredients: ['carrots', 'butter', 'powdered-sugar', 'water', 'orange-marmalade']
+},
+{
+    name: 'Green Beans Salerono: Combine salad oil, vinegar, and spaghetti sauce mix. Pour over cooked green beans and lettuce. Garnish with cooked bacon.',
+    ingredients: ['salad-oil', 'vinegar', 'spaghetti-sauce-mix', 'green-beans', 'lettuce', 'bacon']
+},
+{
+    name: 'Italian Zucchini: Sauté sliced zucchini in olive oil with minced garlic, chopped onion, sliced mushrooms, rosemary, salt, pepper, parsley, thyme, and savory salt. Cook until zucchini is tender. Serve hot.',
+    ingredients: ['zucchini', 'salad-oil', 'garlic', 'onions', 'mushrooms', 'rosemary', 'salt', 'pepper', 'parsley', 'thyme', 'savory-salt']
+},
+{
+    name: 'Mushroom in Sour Cream: Sauté chopped bacon until crisp. Add sliced onion and mushrooms. Cook until onion is tender. Stir in flour and cook for 1 minute. Add sour cream and Worcestershire sauce. Cook until heated through. Serve over toast slices.',
+    ingredients: ['bacon', 'onions', 'mushrooms', 'flour', 'sour-cream', 'Worcestershire-sauce', 'toast-slices']
+},
+{
+    name: 'Orange Sweet Potato: Cook sweet potatoes in boiling water until tender. Drain and mash with butter, powdered sugar, and orange segments. Serve hot.',
+    ingredients: ['sweet-potatoes', 'water', 'butter', 'powdered-sugar', 'oranges']
+},
+{
+    name: 'Saute Zucchini: Sauté sliced zucchini in butter with minced garlic and grated Parmesan cheese until tender. Season with salt and pepper to taste. Serve hot.',
+    ingredients: ['zucchini', 'butter', 'garlic', 'Parmesan-cheese', 'salt', 'pepper']
+},
+{
+    name: 'Spinach Zucchini: Layer phyllo pastry sheets in greased baking dish, brushing each layer with melted butter. Spread filling mixture of sautéed onion, spinach, beaten eggs, crumbled feta cheese, chopped parsley, dill, salt, and pepper over phyllo layers. Bake at 350°F (175°C) for 45 minutes or until golden brown.',
+    ingredients: ['phyllo-pastry', 'butter', 'onions', 'spinach', 'eggs', 'feta-cheese', 'parsley', 'dill', 'salt', 'pepper']
+},
+{
+    name: 'Spinach Souffle: Melt margarine in saucepan. Stir in flour, salt, pepper, and Worcestershire sauce. Gradually add milk and cook until thickened. Beat egg yolks and stir into mixture. Add cooked spinach and mix well. Beat egg whites until stiff peaks form and fold into mixture. Pour into greased baking dish and bake at 350°F (175°C) for 30 minutes or until set.',
+    ingredients: ['margarine', 'flour', 'salt', 'pepper', 'Worcestershire-sauce', 'milk', 'eggs', 'spinach']
+},
+{
+    name: 'Spinach Strudels: Sauté chopped spinach in butter with sliced shallots until wilted. Stir in cream cheese, grated cheese, chopped parsley, and beaten egg. Season with salt and pepper. Spoon mixture onto phyllo pastry sheets and roll up. Brush with melted butter and sprinkle with dry bread crumbs. Bake at 375°F (190°C) for 25 minutes or until golden brown.',
+    ingredients: ['spinach', 'butter', 'shallots', 'cheese', 'cream-cheese', 'phyllo-pastry', 'dry-bread-crumbs', 'eggs', 'parsley']
+},
+{
+    name: 'Stuffed Zucchini: Hollow out zucchini halves and stuff with mixture of browned hamburger, croutons, chopped onion, crumbled bouillon cube, salt, pepper, minced garlic, dried thyme, dried oregano, rubbed sage, beaten eggs, grated Parmesan cheese, and melted butter. Bake at 375°F (190°C) for 25 minutes or until zucchini is tender.',
+    ingredients: ['zucchini', 'hamburger', 'croutons', 'onions', 'bouillon-cube', 'salt', 'pepper', 'garlic', 'thyme', 'oregano', 'sage', 'eggs', 'Parmesan-cheese', 'butter']
+},
+{
+    name: 'Stuffed Zucchini: Hollow out zucchini halves and stuff with mixture of browned sausage, chopped onion, croutons, crumbled bouillon cube, salt, pepper, minced garlic, dried thyme, dried oregano, beaten eggs, grated Parmesan cheese, and melted butter. Bake at 375°F (190°C) for 25 minutes or until zucchini is tender.',
+    ingredients: ['zucchini', 'sausage', 'onions', 'croutons', 'bouillon-cube', 'salt', 'pepper', 'garlic', 'thyme', 'oregano', 'eggs', 'Parmesan-cheese', 'butter']
+},
+{
+    name: 'Summer Squash: Cook sliced summer squash in butter until tender. Stir in Worcestershire sauce, beaten eggs, cracker crumbs, chopped onion, grated Parmesan cheese, paprika, and bacon bits. Cook until heated through. Serve hot.',
+    ingredients: ['summer-squash', 'butter', 'salt', 'pepper', 'Worcestershire-sauce', 'eggs', 'cracker-crumbs', 'onions', 'Parmesan-cheese', 'paprika', 'bacon-bits']
+},
+{
+    name: 'Sweet and Sour Red Cabbage: Sauté shredded cabbage in oil until tender. Stir in brown sugar, water, vinegar, pepper, and caraway seed. Cook until cabbage is heated through and flavors are blended.',
+    ingredients: ['oil', 'cabbage', 'brown-sugar', 'water', 'vinegar', 'pepper', 'caraway-seed']
+},
+{
+    name: 'The Spinach: Sauté chopped spinach in butter until wilted. Stir in cooked bacon, minced onion, flour, milk, nutmeg, and beef stock base. Cook until thickened. Serve hot.',
+    ingredients: ['spinach', 'butter', 'bacon', 'onions', 'flour', 'milk', 'nutmeg', 'beef-stock-base']
+},
+{
+    name: 'The Spinach: Sauté chopped spinach in butter until wilted. Stir in cooked bacon, minced onion, flour, milk, nutmeg, and beef bouillon. Cook until thickened. Serve hot.',
+    ingredients: ['spinach', 'butter', 'bacon', 'onions', 'flour', 'milk', 'nutmeg', 'beef-bouillon']
+},
+{
+    name: 'Three Cheese Spinach: Sauté sliced mushrooms and chopped onion in butter until tender. Stir in chopped spinach and cook until wilted. Remove from heat and stir in cottage cheese, Parmesan cheese, beaten eggs, salt, pepper, and Swiss cheese. Spoon mixture into greased baking dish and sprinkle with paprika. Bake at 350°F (175°C) for 30 minutes or until set.',
+    ingredients: ['onions', 'mushrooms', 'spinach', 'cottage-cheese', 'Parmesan-cheese', 'eggs', 'salt', 'pepper', 'Swiss-cheese', 'paprika']
+},
+{
+    name: 'Tulelake Potato Casserole: Cook hashbrown potatoes in boiling water until tender. Drain and mix with melted butter, salt, pepper, chopped onion, cream of chicken soup, shredded cheddar cheese, and sour cream. Spread mixture in greased baking dish. Top with crushed cornflakes and dot with butter. Bake at 350°F (175°C) for 45 minutes or until golden brown.',
+    ingredients: ['hashbrown-potatoes', 'butter', 'salt', 'pepper', 'onions', 'cream-of-chicken-soup', 'cheddar-cheese', 'sour-cream', 'cornflakes']
+},
+{
+    name: 'Zucchini Patties: Grate zucchini and onion. Combine with beaten eggs, grated Parmesan cheese, minced garlic, flour, chopped parsley, salt, pepper, and olive oil. Form mixture into patties and fry in hot oil until golden brown and crispy.',
+    ingredients: ['zucchini', 'eggs', 'Parmesan-cheese', 'garlic', 'flour', 'parsley', 'onions', 'salt', 'pepper', 'olive oil']
+},
+{
+    name: 'Apple Dumplings: Peel and core apples. Cut each apple into 8 wedges. Wrap each wedge in crescent roll dough and place in greased baking dish. Combine sugar, water, and cinnamon in saucepan and bring to a boil. Pour mixture over dumplings. Bake at 350°F (175°C) for 35 minutes or until golden brown.',
+    ingredients: ['sugar', 'water', 'cinnamon', 'nutmeg', 'butter', 'apples', 'flour', 'salt', 'baking-powder', 'shortening', 'milk']
+},
+{
+    name: 'Apple Dessert for a Crowd: Mix together flour, sugar, and salt. Cut in shortening until mixture resembles coarse crumbs. Stir in beaten egg yolk and enough water to form a dough. Roll out dough and line bottom of greased baking dish. Arrange sliced tart apples on top. Sprinkle with cinnamon and sugar. Bake at 375°F (190°C) for 45 minutes or until crust is golden brown.',
+    ingredients: ['flour', 'sugar', 'salt', 'shortening', 'egg-yolk', 'cornflakes', 'tart-apples', 'cinnamon']
+},
+{
+    name: 'Chilled Prune Whip: Soak prunes in water overnight. Drain and purée in blender with egg white, salt, sugar, and lemon juice. Fold in chopped pecans. Chill until firm.',
+    ingredients: ['prunes', 'egg-white', 'water', 'salt', 'sugar', 'lemon-juice', 'pecans']
+},
+{
+    name: 'Fresh Peach Dessert: Cook sliced peaches with marshmallows and water until thickened. Stir in powdered sugar and vanilla. Pour mixture over crushed vanilla wafers in greased baking dish. Dissolve Knox gelatin in water and add to peach mixture. Melt margarine in saucepan and beat in egg. Pour over peach mixture. Bake at 350°F (175°C) for 30 minutes or until set.',
+    ingredients: ['peaches', 'marshmallows', 'water', 'powdered-sugar', 'vanilla-wafers', 'Knox-gelatin', 'margarine', 'eggs']
+},
+{
+    name: 'South Carolina Cobbler: Combine sliced peaches with sugar and almond flavoring. Pour into greased baking dish. Combine flour, sugar, salt, and melted butter in mixing bowl. Stir in milk until smooth. Pour batter over peaches. Bake at 375°F (190°C) for 45 minutes or until golden brown and bubbly.',
+    ingredients: ['peaches', 'sugar', 'almond-flavoring', 'butter', 'flour', 'baking-powder', 'salt', 'milk']
+},
+{
+    name: 'Spanish Cream Pudding: Mix together sugar, Knox gelatin, and salt in saucepan. Stir in milk and cook over medium heat until thickened. Remove from heat and stir in vanilla. Beat egg yolks in bowl and gradually stir in hot milk mixture. Cook until thickened. Remove from heat and cool. Beat egg whites until stiff peaks form and fold into cooled pudding. Pour into serving dishes and chill until set.',
+    ingredients: ['sugar', 'Knox-gelatin', 'salt', 'milk', 'vanilla', 'eggs']
+},
+{
+    name: 'Artichoke Mozzarella Casserole: Sauté chopped green onions, minced garlic, chopped parsley, and oregano in olive oil until softened. Remove from heat and stir in beaten eggs, chopped artichoke hearts, bread crumbs, grated mozzarella cheese, salt, and hot pepper liquid. Pour mixture into greased baking dish. Bake at 350°F (175°C) for 30 minutes or until set and golden brown.',
+    ingredients: ['olive-oil', 'green-onions', 'garlic', 'parsley', 'oregano', 'eggs', 'artichoke-hearts', 'bread-crumbs', 'mozzarella-cheese', 'salt', 'hot-pepper-liquid']
+},
+{
+    name: 'Asparagus Tomato Quiche: Line pie shell with sliced tomatoes. Beat together eggs, flour, paprika, salt, and dry mustard. Stir in grated Swiss cheese and chopped asparagus. Pour mixture over tomatoes. Bake at 375°F (190°C) for 45 minutes or until set and golden brown.',
+    ingredients: ['pie-shell', 'eggs', 'flour', 'paprika', 'salt', 'dry-mustard', 'grated-Swiss-cheese', 'asparagus', 'tomato']
+},
+{
+    name: 'Beef Enchiladas: Brown ground beef with minced garlic and salt. Stir in vinegar, water, chili powder, and red kidney beans. Spoon mixture onto tortillas and roll up. Place enchiladas seam side down in greased baking dish. Combine salad oil, minced garlic, chopped onion, and tomato sauce in saucepan and cook until heated through. Pour sauce over enchiladas. Bake at 350°F (175°C) for 30 minutes. Serve hot.',
+    ingredients: ['beef', 'garlic', 'salt', 'vinegar', 'water', 'chili-powder', 'red-kidney-beans', 'tortillas', 'salad-oil', 'garlic', 'onions', 'tomato-sauce']
+},
+{
+    name: 'Beef Spinach Quiche: Melt butter in saucepan. Stir in chopped onion and ground beef. Cook until beef is browned. Beat together eggs, heavy cream, cooked spinach, salt, pepper, and nutmeg. Stir in grated cheese. Pour mixture into baked pie shell and bake at 375°F (190°C) for 30 minutes or until set.',
+    ingredients: ['butter', 'baked-pie-shell', 'onions', 'hamburger', 'eggs', 'heavy-cream', 'spinach', 'salt', 'pepper', 'nutmeg', 'cheese']
+},
+{
+    name: 'Rice and Broccoli Casserole: Cook rice according to package directions. Steam broccoli until tender. Sauté chopped onion, celery, and mushrooms in butter until softened. Combine cooked rice, steamed broccoli, sautéed vegetables, and Cheez Whiz in greased baking dish. Bake at 350°F (175°C) for 30 minutes or until heated through.',
+    ingredients: ['rice', 'broccoli', 'onions', 'celery', 'mushrooms', 'Cheez-Whiz', 'butter']
+},
+{
+    name: 'Broccoli Cheese Pie: Cook chopped broccoli until tender. Drain and mix with sautéed onion, milk, nutmeg, grated Parmesan cheese, hot pepper sauce, beaten eggs, salt, pepper, chopped parsley, and grated Swiss cheese. Pour mixture into baked pie shell. Bake at 375°F (190°C) for 30 minutes or until set and golden brown.',
+    ingredients: ['broccoli', 'onions', 'milk', 'nutmeg', 'Parmesan-cheese', 'hot-pepper-sauce', 'eggs', 'salt', 'pepper', 'parsley', 'Swiss-cheese']
+},
+{
+    name: 'Cheese Strata: Layer bread cubes and grated cheese in greased baking dish. Beat together eggs, milk, salt, pepper, and dry mustard. Pour mixture over bread and cheese. Bake at 350°F (175°C) for 45 minutes or until set and golden brown.',
+    ingredients: ['bread', 'grated-cheese', 'eggs', 'milk', 'salt', 'pepper', 'dry-mustard']
+},
+
+{
+    name: 'Chicken Tamale Pie: Cook chicken, onion, and bacon until done. Mix cornmeal, chicken broth, eggs, cumin, salt, and cayenne pepper. Layer in a baking dish with tomato, creamed corn, and chili powder. Top with bacon and olives. Bake until set.',
+    ingredients: ['boned-chicken-breast', 'onions', 'bacon', 'cornmeal', 'chicken-broth', 'eggs', 'cumin', 'salt', 'cayenne-pepper', 'tomato', 'cream-corn', 'chili-powder', 'bacon', 'olives']
+},
+{
+    name: 'Chili Cheese Puff: Mix eggs, flour, baking powder, and salt. Stir in cottage cheese, jack cheese, and green chilies. Bake until puffed and golden.',
+    ingredients: ['eggs', 'flour', 'baking-powder', 'salt', 'cottage-cheese', 'jack-cheese', 'green-chilies']
+},
+{
+    name: 'Chili Chicken: Cook noodles. Saute onion, then add cream of mushroom soup, pimentos, chicken, green chilies, and grated cheese. Mix with cooked noodles and bake until bubbly.',
+    ingredients: ['noodles', 'onions', 'butter', 'cream-of-mushroom-soup', 'jar-pimentos', 'chicken', 'green-chilies', 'grated-cheese']
+},
+{
+    name: 'Chinese Noodle Casserole: Mix mushroom soup, tuna, oil, cashews, celery, onion, and chow mein noodles. Bake until heated through.',
+    ingredients: ['mushroom-soup', 'tuna', 'oil', 'cashew-nuts', 'celery', 'onions', 'chow-mein-noodles']
+},
+{
+    name: 'Crazy Crust Pizza: Mix flour, salt, oregano, pepper, eggs, and milk. Pour into a hot pizza pan and bake until set. Top with your favorite pizza toppings.',
+    ingredients: ['flour', 'salt', 'oregano', 'pepper', 'eggs', 'milk']
+},
+{
+    name: 'Deep Dish Pizza: Prepare pizza mix according to package directions. Layer with hamburger, onion, tomato, mushroom stems, olives, and mozzarella cheese. Bake until cheese is bubbly.',
+    ingredients: ['chef-boyardee-package-pizza-mix', 'hamburger', 'onion', 'tomato', 'mushroom-stems', 'olives', 'mozzarella-cheese']
+},
+{
+    name: 'Easy Bake Pizza: Cook ground beef and pasta. Mix with spaghetti sauce and parmesan cheese. Pour into a baking dish and top with mozzarella cheese. Bake until bubbly.',
+    ingredients: ['ground-beef', 'pasta', 'spaghetti-sauce', 'parmesan-cheese', 'mozzarella-cheese']
+},
+{
+    name: 'Fum Gum: Cook elbow macaroni. Mix with onion, beef, cheese, tomato, tomato sauce, garlic, salt, pepper, and parsley. Bake until heated through.',
+    ingredients: ['elbow-macaroni', 'onions', 'beef', 'cheese', 'tomato', 'tomato-sauce', 'garlic', 'salt', 'pepper', 'parsley']
+},
+{
+    name: 'Garden Quiche: Mix bisquick baking mix with water. Stir in broccoli, Swiss cheese, onion, eggs, whipping cream, salt, sugar, and cayenne pepper. Bake until set.',
+    ingredients: ['bisquick-baking-mix', 'water', 'broccoli', 'Swiss-cheese', 'onions', 'eggs', 'whipping-cream', 'salt', 'sugar', 'cayenne-pepper']
+},
+{
+    name: 'Impossible Taco Pie: Cook beef and onion. Mix with taco seasoning mix, green chilies, milk, bisquick baking mix, eggs, tomato, and cheese. Bake until set.',
+    ingredients: ['beef', 'onions', 'taco-seasoning-mix', 'green-chilies', 'milk', 'bisquick-baking-mix', 'eggs', 'tomato', 'cheese']
+},
+{
+    name: 'Pasta Primavera: Cook linguine. Mix with basil, green pepper, low-calorie mayo, parmesan cheese, lemon juice, salt, red pepper, black pepper, and chicken. Serve chilled.',
+    ingredients: ['basil', 'green-pepper', 'low-calorie-mayo', 'parmesan-cheese', 'lemon-juice', 'salt', 'ground-red-pepper', 'ground-black-pepper', 'linguine', 'chicken']
+},
+{
+    name: 'Ranch-Style Baked Beans: Cook ground chuck with onion. Mix with Lipton onion soup mix, pork, beans, tomato sauce, kidney beans, ketchup, water, mustard, and cider vinegar. Bake until bubbly.',
+    ingredients: ['margarine', 'ground-chuck', 'lipton-onion-soup-mix', 'pork', 'beans', 'tomato-sauce', 'kidney-beans', 'ketchup', 'water', 'mustard', 'cider-vinegar']
+},
+{
+    name: 'Sour Cream Enchiladas: Mix sour cream with green onions and cumin. Fill tortillas with the mixture, roll up, and place in a baking dish. Top with enchilada sauce and cheese. Bake until bubbly.',
+    ingredients: ['sour-cream', 'green-onions', 'cumin', 'cheese', 'tortillas', 'oil', 'enchilada-sauce']
+},
+{
+    name: 'Spinach Fritatta: Cook spinach and bacon. Saute green onions and garlic. Mix with basil, salt, pepper, eggs, water, and Swiss cheese. Pour into a hot skillet and cook until set.',
+    ingredients: ['spinach', 'bacon', 'green-onions', 'garlic', 'basil', 'salt', 'pepper', 'eggs', 'water', 'Swiss-cheese']
+},
+{
+    name: 'Stuffed Green Peppers: Cook hamburger with tomato, caraway seed, salt, and pepper. Mix with eggs, rice, and onion. Fill green peppers and bake until peppers are tender.',
+    ingredients: ['hamburger', 'tomato', 'caraway-seed', 'salt', 'pepper', 'eggs', 'rice', 'onion']
+},
+{
+    name: 'Tamale Pie: Cook onion and garlic. Mix with cornmeal, oil, hamburger, Spanish seasoning, tomato, cream corn, olives, tomato soup, grated cheese, salt, and pepper. Bake until set.',
+    ingredients: ['onion', 'garlic', 'cornmeal', 'salad-oil', 'hamburger', 'Spanish-seasoning', 'tomato', 'cream-corn', 'olives', 'tomato-soup', 'grated-cheese', 'salt', 'pepper']
+}
+
+        ];
+
+    // Existing code
+// Define an array to store matched recipes
+let savedMatches = [];
+
+const dropdownInput = document.getElementById("ingredientInput");
+const dropdownMenu = document.getElementById("ingredientDropdown");
+const ingredientList = document.getElementById("ingredientList");
+
+// Populate dropdown options
+function populateDropdown() {
+    const userInput = dropdownInput.value.trim().toLowerCase();
+
+    // Split the input by commas and spaces
+    const userInputArray = userInput.split(/[\s,]+/);
+
+    dropdownMenu.innerHTML = "";
+    ingredients.forEach(ingredient => {
+        userInputArray.forEach(input => {
+            if (input && ingredient.toLowerCase().startsWith(input)) {
+                const option = document.createElement("div");
+                option.textContent = ingredient;
+                option.classList.add("dropdown-item");
+                option.onclick = () => {
+                    addIngredient(ingredient);
+                };
+                dropdownMenu.appendChild(option);
+            }
+        });
+    });
+}
+
+dropdownInput.addEventListener("input", populateDropdown);
+
+dropdownInput.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        const userInput = dropdownInput.value.trim().toLowerCase();
+        const userInputArray = userInput.split(/[\s,]+/);
+        userInputArray.forEach(ingredient => {
+            if (ingredients.includes(ingredient.toLowerCase())) {
+                addIngredient(ingredient);
+            }
+        });
+        dropdownInput.value = "";
+        dropdownMenu.innerHTML = "";
+    }
+});
+
+function addIngredient(ingredient) {
+    const ingredientItem = document.createElement('div');
+    ingredientItem.textContent = ingredient;
+    ingredientItem.classList.add("ingredient-item");
+
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "X";
+    deleteButton.classList.add("delete-button");
+    deleteButton.onclick = () => {
+        removeIngredient(ingredientItem);
+    };
+
+    ingredientItem.appendChild(deleteButton);
+    ingredientList.appendChild(ingredientItem);
+
+    dropdownInput.value = "";
+    dropdownMenu.innerHTML = "";
+}
+
+function removeIngredient(ingredientItem) {
+    ingredientItem.remove();
+}
+
+// Define your existing JavaScript functions here
+ // Define your existing JavaScript functions here
+
+        function findMatch() {
+            // Reset the list of matched recipes
+            savedMatches = [];
+
+            const selectedIngredients = Array.from(document.querySelectorAll(".ingredient-item")).map(item => {
+                // Extract ingredient text without the "X" character
+                return item.textContent.replace("X", "").trim().toLowerCase();
+            });
+
+            console.log("Selected Ingredients:", selectedIngredients); // Add this logging statement
+
+            if (selectedIngredients.length === 0) {
+                document.getElementById("matchResult").innerText = "Match Not Found";
+                return; // Exit the function if no ingredients are entered
+            }
+
+            // Save the search attempt regardless of matches
+            savedMatches.push({
+                recipes: [],
+                ingredients: selectedIngredients
+            });
+
+            console.log("Saved Matches:", savedMatches); // Add this logging statement
+
+            // Perform matching logic...
+            
+            // Use the outer matchedRecipes variable directly without redeclaring it
+            matchedRecipes = recipes.filter(recipe => {
+                return recipe.ingredients.every(ingredient => selectedIngredients.includes(ingredient.toLowerCase()));
+            });
+
+            console.log("Matched Recipes:", matchedRecipes); // Add this logging statement
+
+            if (matchedRecipes.length > 0) {
+                // Prepare the content for download
+                let content = "";
+
+                // List matched recipes with ingredients
+                matchedRecipes.forEach(recipe => {
+                    content += `${recipe.name}: ${recipe.ingredients.join(", ")}\n\n\n`;
+                });
+
+                // Add a separator between recipes and ingredients list
+                content += "\n";
+
+                // List all selected ingredients
+                content += "Selected Ingredients: " + selectedIngredients.join(", ") + "\n";
+
+               // Add a separator between "Selected Ingredients:" line and the number of matched recipes
+				content += "\n";
+				
+				
+				
+
+                // Add the number of matched recipes to the content
+                content += `You matched with ${matchedRecipes.length} recipes.\n`;
+
+                // Create a hidden link element to trigger the download
+                const element = document.createElement("a");
+                element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(content + "\n\nPLEASE READ: You can now copy and paste all the ingredients you typed above, and paste it back into the search bar. Once you've done that, hit enter and all the ingredients you typed before will appear. This is a way to avoid retyping all your ingredients and also avoiding losing progress. To do this, highlight all the ingredients you typed and press 'CTRL C'. Then, go back to the search bar and click on it, press 'CTRL V' and hit Enter. Also, if by any reason you accidentally erased all the selected ingredients, hit 'CRTL Z' to undo your mistake."));
+                element.setAttribute("download", "matched_recipes.txt");
+                element.style.display = "none";
+                document.body.appendChild(element);
+
+                // Trigger the click event to start the download
+                element.click();
+
+                // Remove the element from the DOM
+                document.body.removeChild(element);
+
+                localStorage.setItem('savedMatches', JSON.stringify(savedMatches)); // Store saved matches in localStorage
+
+                // Reload the page after the download process
+                location.reload();
+            } else {
+                document.getElementById("matchResult").innerText = "Match Not Found";
+            }
+
+            // Save the typed ingredients after finding matches
+            saveTypedIngredients();
+        }
+
+
+
+
+
+
+// Provided JavaScript code
+
+
+
+// Add the provided JavaScript code here
+
+    </script> 
+	
+	
+    <style>
+        
+
+        .ingredient-item {
+            padding: 5px 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            display: inline-block;
+            cursor: pointer;
+			bottom: 780px;
+        }
+
+        .ingredient-item:hover {
+            background-color: #e0e0e0;
+        }
+
+        .delete-button {
+            margin-left: 5px;
+            background-color: #ff0000;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+    </style>
+</body>
+ <button class = "matchButton" onclick="findMatch()">Find Match</button>
+</html>
